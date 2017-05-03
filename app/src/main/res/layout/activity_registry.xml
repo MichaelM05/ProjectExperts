@@ -137,7 +137,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <!--<LinearLayout
         android:id="@+id/area_card"
         android:layout_below="@+id/area_password"
         android:layout_width="match_parent"
@@ -188,7 +188,7 @@
             android:textColorHint="@color/colorPrimary"
             />
 
-    </LinearLayout>
+    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/bottom_bar"
