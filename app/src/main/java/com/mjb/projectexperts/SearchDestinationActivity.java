@@ -16,7 +16,7 @@ public class SearchDestinationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_destination);
 
 
-        Spinner spinnerL = (Spinner) findViewById(R.id.spinner_location);
+        /*Spinner spinnerL = (Spinner) findViewById(R.id.spinner_location);
         Spinner spinnerTA = (Spinner) findViewById(R.id.spinner_typeActivity);
         Spinner spinnerTT = (Spinner) findViewById(R.id.spinner_typeTourism);
         String[] location = {"San José","Cartago","Heredia","Alajuela","Puntarenas","Limón", "Guanacaste"};
@@ -24,7 +24,7 @@ public class SearchDestinationActivity extends AppCompatActivity {
         String[] tourism = {"Turismo 1","Turismo 2"};
         spinnerL.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, location));
         spinnerTA.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, activity));
-        spinnerTT.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tourism));
+        spinnerTT.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, tourism));*/
 
 
         Button btnAccept = (Button)findViewById(R.id.btn_accept_search);

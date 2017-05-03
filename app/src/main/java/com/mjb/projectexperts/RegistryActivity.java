@@ -17,7 +17,7 @@ public class RegistryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_registry);
 
 
-        Spinner spinnerP = (Spinner) findViewById(R.id.spinner_province);
+        /*Spinner spinnerP = (Spinner) findViewById(R.id.spinner_province);
         Spinner spinnerC = (Spinner) findViewById(R.id.spinner_canton);
         Spinner spinnerD = (Spinner) findViewById(R.id.spinner_district);
         String[] provinces = {"San José","Cartago","Heredia","Alajuela","Puntarenas","Limón", "Guanacaste"};
@@ -25,7 +25,7 @@ public class RegistryActivity extends AppCompatActivity {
         String[] district = {"Distrito1","Distrito2"};
         spinnerP.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, provinces));
         spinnerC.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, canton));
-        spinnerD.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, district));
+        spinnerD.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, district));*/
 
 
         Button btnRegistry = (Button)findViewById(R.id.btn_accept_registry_);
