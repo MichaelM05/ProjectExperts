@@ -1,0 +1,38 @@
+<resources>
+    <string name="app_name">Rutas CR</string>
+
+    <!--String loginActivity-->
+    <string name="lbl_user_login">Usuario</string>
+    <string name="lbl_password_login">Contraseña</string>
+    <string name="btn_accept_login">Ingresar</string>
+    <string name="lbl_registry_login">¿Aún no tienes cuenta?</string>
+    <string name="btn_registry_login">Registrarse</string>
+    <!-- -->
+
+    <!--String RegistryActivity-->
+    <string name="lbl_user_registry">Usuario</string>
+    <string name="lbl_password_registry">Contraseña</string>
+    <string name="btn_accept_registry_">Registrarse</string>
+    <string name="lbl_name_registry">Nombre completo</string>
+    <string name="lbl_email_registry">Correo electrónico</string>
+    <string name="lbl_province_registry">Provincia</string>
+    <string name="lbl_canton_registry">Cantón</string>
+    <string name="lbl_district_registry">Distrito</string>
+    <!-- -->
+
+    <!--String SearchDestinationActivity-->
+    <string name="lbl_activity_search">Actividad</string>
+    <string name="lbl_price_search">Precio</string>
+    <string name="lbl_typeActivity_search">Tipo actividad</string>
+    <string name="lbl_typeTourism_search">Tipo turismo</string>
+    <string name="lbl_location_search">Ubicación</string>
+    <string name="btn_search_search">Buscar</string>
+    <!-- -->
+
+    <string name="btn_view_car">Ver</string>
+
+    <string name="lbl_tittle_site">Sitio 1</string>
+    <string name="lbl_description_site">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab</string>
+
+
+</resources>
