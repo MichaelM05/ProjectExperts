@@ -23,7 +23,8 @@
         <activity android:name=".DetailSiteActivity" />
         <activity android:name=".NewSiteActivity" />
         <activity android:name=".ModifyRouteActivity" />
-        <activity android:name=".AddSitesActivity"></activity>
+        <activity android:name=".AddSitesActivity" />
+        <activity android:name=".MapActivity"></activity>
     </application>
 
 </manifest>

@@ -72,7 +72,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
             @Override
             public void onClick(View v) {
 
-                Intent main = new Intent(mContext, DetailSiteActivity.class);
+                Intent main = new Intent(mContext, MapActivity.class);
                 mContext.startActivity(main);
 
             }
