@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mjb.projectexperts">
+
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -18,7 +20,10 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".RegistryActivity" />
         <activity android:name=".RoutesFoundActivity" />
-        <activity android:name=".DetailSiteActivity"></activity>
+        <activity android:name=".DetailSiteActivity" />
+        <activity android:name=".NewSiteActivity" />
+        <activity android:name=".ModifyRouteActivity" />
+        <activity android:name=".AddSitesActivity"></activity>
     </application>
 
 </manifest>
