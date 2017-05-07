@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">Rutas CR</string>
 
+    <!--String menuActivity-->
+    <string name="lbl_search_route">Buscar Rutas</string>
+    <string name="lbl_pre_route">Rutas Prediseñadas</string>
+    <string name="lbl_nav_login">Iniciar Sesión</string>
+    <string name="lbl_register">Registro</string>
+    <string name="lbl_title_user">Usuarios</string>
+
     <!--String loginActivity-->
     <string name="lbl_user_login">Usuario</string>
     <string name="lbl_password_login">Contraseña</string>
@@ -39,5 +46,13 @@
     <string name="btn_delete_site">Eliminar</string>
     <string name="btn_create_route">Crear</string>
     <string name="btn_modify_route">Modificar</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    <!--String Titles Activities-->
+    <string name="title_activity_menu">RutasCR</string>
 
 </resources>
