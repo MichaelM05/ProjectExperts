@@ -1,6 +1,5 @@
 package com.mjb.projectexperts;
 
-import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.support.v7.app.AppCompatActivity;
@@ -10,54 +9,40 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.Button;
-
 
 import com.mjb.projectexperts.Domain.Route;
 
 import java.util.ArrayList;
 
-public class NewSiteActivity extends AppCompatActivity {
+public class CreateRoute extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private NewRouteAdapter adapter;
+    private AddSiteAdapter adapter;
     private ArrayList<Route> routeList;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_site);
-
+        setContentView(R.layout.activity_create_route);
 
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
 
         for(int i = 0; i < 4; i++){
-            routeList.add(new Route("Ruta " + i, "Descripción",
+            routeList.add(new Route("Sitio " + i, "Descripción",
                     "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
         }
 
-        adapter = new NewRouteAdapter(this, routeList);
+        adapter = new AddSiteAdapter(this, routeList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.addItemDecoration(new CreateRoute.GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-
-        Button btnCreate = (Button)findViewById(R.id.btn_accept_create);
-        btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent main = new Intent(NewSiteActivity.this, CreateRoute.class);
-                startActivity(main);
-            }
-        });
     }
-
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -98,5 +83,4 @@ public class NewSiteActivity extends AppCompatActivity {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
-
 }
