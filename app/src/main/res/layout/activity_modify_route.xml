@@ -11,9 +11,49 @@
 
 
     <LinearLayout
+        android:id="@+id/area_sites_add"
+        android:layout_below="@+id/area_name_route"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal" >
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/area_typeActivity"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+
+        <Button
+            android:id="@+id/btn_add_site"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/shopping_cart_loaded_filled_50"
+            android:text="Agregar sitios"
+            android:textColor="@android:color/white" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
         android:id="@+id/area_name_route"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -23,13 +63,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/home_48" />
+            android:src="@drawable/create_new_52" />
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/til_user"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="32dp">
+            android:layout_marginLeft="5dp">
 
             <EditText
                 android:id="@+id/txtUserName"
@@ -42,46 +82,7 @@
         </android.support.design.widget.TextInputLayout>
 
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/area_typeActivity"
-        android:layout_below="@+id/area_name_route"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtinfo"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/btn_add_site"
-            android:id="@+id/btn_add_site"
-            android:textSize="17dp"
-            android:layout_centerHorizontal="true"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
-
-
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:id="@+id/area_sites_add"
-        android:layout_below="@+id/area_name_route"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:orientation="horizontal">
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:scrollbars="vertical" />
-
-    </LinearLayout>
 
 
 

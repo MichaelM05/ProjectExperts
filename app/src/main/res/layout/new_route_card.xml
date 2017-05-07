@@ -47,7 +47,7 @@
                 android:layout_marginTop="@dimen/ic_album_overflow_margin_top"
                 android:scaleType="centerCrop"
                 style="@style/Widget.AppCompat.Button.Borderless"
-                android:text="@string/btn_add_site"
+                android:text="Modificar"
                 android:textColor="@android:color/black"
                 />
 

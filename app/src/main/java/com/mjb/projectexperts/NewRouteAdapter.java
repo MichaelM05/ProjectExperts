@@ -34,6 +34,7 @@ public class NewRouteAdapter extends RecyclerView.Adapter<NewRouteAdapter.MyView
             txvNameRoute = (TextView) view.findViewById(R.id.txvNameRoute);
             imcRoute = (ImageView) view.findViewById(R.id.imc_route);
             btnAdd = (Button) view.findViewById(R.id.btn_add);
+
         }
     }
 
@@ -71,7 +72,8 @@ public class NewRouteAdapter extends RecyclerView.Adapter<NewRouteAdapter.MyView
             @Override
             public void onClick(View v) {
 
-
+                Intent main = new Intent(mContext, ModifyRouteActivity.class);
+                mContext.startActivity(main);
 
             }
 

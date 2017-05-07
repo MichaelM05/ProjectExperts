@@ -48,11 +48,11 @@ public class NewSiteActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        Button btnModify = (Button)findViewById(R.id.btn_accept_modify);
-        btnModify.setOnClickListener(new View.OnClickListener() {
+        Button btnCreate = (Button)findViewById(R.id.btn_accept_create);
+        btnCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent main = new Intent(NewSiteActivity.this, ModifyRouteActivity.class);
+                Intent main = new Intent(NewSiteActivity.this, NewRouteAdapter.class);
                 startActivity(main);
             }
         });
