@@ -91,7 +91,8 @@ public class MenuActivity extends AppCompatActivity
             Intent i = new Intent(this, SearchDestinationActivity.class);
             startActivity(i);
         } else if (id == R.id.nav_pre_route) {
-
+            Intent i = new Intent(this, RoutesFoundActivity.class);
+            startActivity(i);
         }
 
 
