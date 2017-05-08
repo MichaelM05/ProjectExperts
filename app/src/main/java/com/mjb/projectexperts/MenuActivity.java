@@ -63,8 +63,8 @@ public class MenuActivity extends AppCompatActivity
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        Button btnRegistry = (Button)findViewById(R.id.buscar);
-        btnRegistry.setOnClickListener(new View.OnClickListener() {
+        Button btnbuscar = (Button)findViewById(R.id.btn_search);
+        btnbuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent main = new Intent(MenuActivity.this, SearchDestinationActivity.class);
