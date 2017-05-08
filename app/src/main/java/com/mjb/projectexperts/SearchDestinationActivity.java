@@ -16,26 +16,26 @@ public class SearchDestinationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search_destination);
 
 
-        String[] location = {"San José","Cartago","Heredia","Alajuela","Puntarenas","Limón", "Guanacaste"};
-        String[] activity = {"Actividad 1","Actividad 2"};
-        String[] tourism = {"Turismo 1","Turismo 2"};
+        String[] duracion = {"1 HORA","2 HORA","3 HORA"};
+        String[] actividad = {"Actividad 1","Actividad 2"};
+        String[] distancia = {"1 KM","2 KM"};
 
         ArrayAdapter<String> arrayAdapterLocation = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, location);
+                android.R.layout.simple_dropdown_item_1line, distancia);
         MaterialBetterSpinner materialDesignSpinnerLocation = (MaterialBetterSpinner)
-                findViewById(R.id.spinner_location);
+                findViewById(R.id.spinner_actividad);
         materialDesignSpinnerLocation.setAdapter(arrayAdapterLocation);
 
         ArrayAdapter<String> arrayAdapterActivity = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, activity);
+                android.R.layout.simple_dropdown_item_1line, distancia);
         MaterialBetterSpinner materialDesignSpinnerActivity = (MaterialBetterSpinner)
-                findViewById(R.id.spinner_typeActivity);
+                findViewById(R.id.spinner_distancia);
         materialDesignSpinnerActivity.setAdapter(arrayAdapterActivity);
 
         ArrayAdapter<String> arrayAdapterTT = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, tourism);
+                android.R.layout.simple_dropdown_item_1line, duracion);
         MaterialBetterSpinner materialDesignSpinnerTT = (MaterialBetterSpinner)
-                findViewById(R.id.spinner_typeTourism);
+                findViewById(R.id.spinner_duracion);
         materialDesignSpinnerTT.setAdapter(arrayAdapterTT);
 
 
@@ -49,15 +49,6 @@ public class SearchDestinationActivity extends AppCompatActivity {
             }
         });
 
-        Button btnRegistry = (Button)findViewById(R.id. btn_registry_search);
-        btnRegistry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent main = new Intent(SearchDestinationActivity.this, LoginActivity.class);
-                startActivity(main);
-                //finish();
-            }
-        });
 
 
 

@@ -30,11 +30,11 @@
             android:layout_marginLeft="32dp">
 
             <EditText
-                android:id="@+id/txtActivity"
+                android:id="@+id/txtPartida"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="@string/lbl_activity_search"
+                android:hint="@string/lbl_partida_search"
                 android:inputType="text"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -75,7 +75,7 @@
 
 
     <LinearLayout
-        android:id="@+id/area_typeActivity"
+        android:id="@+id/area_distancia"
         android:layout_below="@+id/area_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -85,10 +85,10 @@
 
 
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_typeActivity"
+            android:id="@+id/spinner_distancia"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/lbl_typeActivity_search"
+            android:hint="@string/lbl_distancia_search"
             android:textColorHint="@color/colorPrimary"
             app:met_floatingLabel="normal"
             />
@@ -98,8 +98,8 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/area_typeTourism"
-        android:layout_below="@+id/area_typeActivity"
+        android:id="@+id/area_duracion"
+        android:layout_below="@+id/area_distancia"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -108,10 +108,10 @@
 
 
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_typeTourism"
+            android:id="@+id/spinner_duracion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/lbl_typeTourism_search"
+            android:hint="@string/lbl_duracion_search"
             android:textColorHint="@color/colorPrimary"
             app:met_floatingLabel="normal"
             />
@@ -119,8 +119,8 @@
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/area_address"
-        android:layout_below="@+id/area_typeTourism"
+        android:id="@+id/area_actividad"
+        android:layout_below="@+id/area_duracion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -128,10 +128,10 @@
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
         <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_location"
+            android:id="@+id/spinner_actividad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/lbl_location_search"
+            android:hint="@string/lbl_actividad_search"
             android:textColorHint="@color/colorPrimary"
             app:met_floatingLabel="normal"
             />
@@ -155,18 +155,9 @@
             android:drawableLeft="@drawable/search_filled_50"
             android:text="@string/btn_search_search"
             android:textColor="@android:color/white" />
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/txtinfo"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="@string/btn_registry_login"
-            android:id="@+id/btn_registry_search"
-            android:textSize="17dp"
-            android:layout_centerHorizontal="true"
-            style="@style/Widget.AppCompat.Button.Borderless"/>
     </LinearLayout>
+
+
 
 
 

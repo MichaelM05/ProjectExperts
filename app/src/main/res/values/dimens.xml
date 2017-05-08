@@ -4,6 +4,7 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <dimen name="top_login">60dp</dimen>
+    <dimen name="top_menu">100dp</dimen>
     <dimen name="top_regis">3dp</dimen>
 
 

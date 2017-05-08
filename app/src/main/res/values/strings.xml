@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Rutas CR</string>
+    <string name="google_api_key">AIzaSyAhoeSsQdd0bV6P7eRJLNdT1DW83unihfk</string>
 
     <!--String menuActivity-->
     <string name="lbl_search_route">Buscar Rutas</string>
@@ -7,6 +8,8 @@
     <string name="lbl_nav_login">Iniciar Sesión</string>
     <string name="lbl_register">Registro</string>
     <string name="lbl_title_user">Usuarios</string>
+    <string name="lbl_title">Rutas Recomendadas</string>
+    <string name="btn_buscar">Buscar Rutas</string>
 
     <!--String loginActivity-->
     <string name="lbl_user_login">Usuario</string>
@@ -28,11 +31,11 @@
     <!-- -->
 
     <!--String SearchDestinationActivity-->
-    <string name="lbl_activity_search">Actividad</string>
+    <string name="lbl_partida_search">Punto de partida</string>
     <string name="lbl_price_search">Precio</string>
-    <string name="lbl_typeActivity_search">Tipo actividad</string>
-    <string name="lbl_typeTourism_search">Tipo turismo</string>
-    <string name="lbl_location_search">Ubicación</string>
+    <string name="lbl_distancia_search">Distancia</string>
+    <string name="lbl_duracion_search">Duración</string>
+    <string name="lbl_actividad_search">Actividad</string>
     <string name="btn_search_search">Buscar</string>
     <!-- -->
 
