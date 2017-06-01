@@ -1,61 +1,80 @@
-package com.mjb.projectexperts;
+package layout;
 
-import android.content.Intent;
+
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.R;
+import com.mjb.projectexperts.RouteAdapter;
 
 import java.util.ArrayList;
 
-public class ModifyRouteActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class MainFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private DeleteSiteAdapter adapter;
+    private RouteAdapter adapter;
     private ArrayList<Route> routeList;
 
+
+    public MainFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_modify_route);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
 
+        View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
 
         for(int i = 0; i < 4; i++){
-            routeList.add(new Route("Sitio " + i, "Descripción",
+            routeList.add(new Route("Ruta " + i, "Descripción",
                     "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
         }
 
-        adapter = new DeleteSiteAdapter(this, routeList);
+        adapter = new RouteAdapter(v.getContext(), routeList);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.addItemDecoration(new MainFragment.GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
-        Button btnAdd = (Button)findViewById(R.id.btn_add_site);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
+        Button btnbuscar = (Button)v.findViewById(R.id.btn_search);
+
+        btnbuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent main = new Intent(ModifyRouteActivity.this, AddSitesActivity.class);
-                startActivity(main);
+                SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
+                ft.commit();
+                //finish();
             }
         });
 
+        // Inflate the layout for this fragment
+        return v;
     }
-
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -96,4 +115,5 @@ public class ModifyRouteActivity extends AppCompatActivity {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
 }

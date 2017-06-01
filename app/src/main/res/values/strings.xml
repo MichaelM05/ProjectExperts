@@ -10,6 +10,7 @@
     <string name="lbl_title_user">Usuarios</string>
     <string name="lbl_title">Rutas Recomendadas</string>
     <string name="btn_buscar">Buscar Rutas</string>
+    <string name="lbl_main">Inicio</string>
 
     <!--String loginActivity-->
     <string name="lbl_user_login">Usuario</string>
@@ -57,5 +58,8 @@
 
     <!--String Titles Activities-->
     <string name="title_activity_menu">RutasCR</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

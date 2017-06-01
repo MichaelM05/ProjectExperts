@@ -28,8 +28,8 @@ public class MapActivity extends AppCompatActivity implements OnMapReadyCallback
         btnView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent main = new Intent(MapActivity.this, DetailSiteActivity.class);
-                startActivity(main);
+               // Intent main = new Intent(MapActivity.this, DetailSiteActivity.class);
+                //startActivity(main);
             }
         });
 

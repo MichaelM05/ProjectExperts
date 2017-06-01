@@ -1,33 +1,46 @@
-package com.mjb.projectexperts;
+package layout;
+
 
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.mjb.projectexperts.DeleteSiteAdapter;
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.R;
 
 import java.util.ArrayList;
 
-public class AddSitesActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class ModifyRouteFragment extends Fragment {
 
     private RecyclerView recyclerView;
-    private AddSiteAdapter adapter;
+    private DeleteSiteAdapter adapter;
     private ArrayList<Route> routeList;
 
+    public ModifyRouteFragment() {
+        // Required empty public constructor
+    }
+
+
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_sites);
-
-
-
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.fragment_modify_route, container, false);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
 
@@ -36,14 +49,28 @@ public class AddSitesActivity extends AppCompatActivity {
                     "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
         }
 
-        adapter = new AddSiteAdapter(this, routeList);
+        adapter = new DeleteSiteAdapter(v.getContext(), routeList);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        Button btnAdd = (Button)v.findViewById(R.id.btn_add_site);
+        btnAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddSitesFragment addSitesFragment = new AddSitesFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, addSitesFragment, "addSitesFragment");
+                ft.commit();
+            }
+        });
+
+        return v;
     }
+
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 
@@ -84,4 +111,5 @@ public class AddSitesActivity extends AppCompatActivity {
         Resources r = getResources();
         return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
     }
+
 }

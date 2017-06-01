@@ -137,58 +137,6 @@
 
     </LinearLayout>
 
-    <!--<LinearLayout
-        android:id="@+id/area_card"
-        android:layout_below="@+id/area_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_province"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/lbl_province_registry"
-            android:textColorHint="@color/colorPrimary"
-            />
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/area_svcCard"
-        android:layout_below="@+id/area_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-
-        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_canton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/lbl_canton_registry"
-            android:textColorHint="@color/colorPrimary"
-            />
-
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/area_address"
-        android:layout_below="@+id/area_svcCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner
-            android:id="@+id/spinner_district"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/lbl_district_registry"
-            android:textColorHint="@color/colorPrimary"
-            />
-
-    </LinearLayout>-->
 
     <LinearLayout
         android:id="@+id/bottom_bar"

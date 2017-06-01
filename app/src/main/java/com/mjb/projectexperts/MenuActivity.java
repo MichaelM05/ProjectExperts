@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -23,12 +24,16 @@ import com.mjb.projectexperts.Domain.Route;
 
 import java.util.ArrayList;
 
+import layout.DetailSiteFragment;
+import layout.LoginFragment;
+import layout.MainFragment;
+import layout.RegistryFragment;
+import layout.RoutesFoundFragment;
+import layout.SearchDestinationFragment;
+
 public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private RecyclerView recyclerView;
-    private RouteAdapter adapter;
-    private ArrayList<Route> routeList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,32 +51,11 @@ public class MenuActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        MainFragment mainFragment = new MainFragment();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame, mainFragment, "mainFragment");
+        ft.commit();
 
-        routeList = new ArrayList<>();
-
-        for(int i = 0; i < 4; i++){
-            routeList.add(new Route("Ruta " + i, "Descripción",
-                    "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
-        }
-
-        adapter = new RouteAdapter(this, routeList);
-
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new MenuActivity.GridSpacingItemDecoration(2, dpToPx(10), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
-
-        Button btnbuscar = (Button)findViewById(R.id.btn_search);
-        btnbuscar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent main = new Intent(MenuActivity.this, SearchDestinationActivity.class);
-                startActivity(main);
-                //finish();
-            }
-        });
     }
 
     @Override
@@ -112,18 +96,33 @@ public class MenuActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_login) {
-            Intent i = new Intent(this, LoginActivity.class);
-            startActivity(i);
+        if(id == R.id.nav_main) {
+            MainFragment mainFragment = new MainFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, mainFragment, "mainFragment");
+            ft.commit();
+        }
+        else if (id == R.id.nav_login) {
+            LoginFragment loginFragment = new LoginFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, loginFragment, "loginFragment");
+            ft.commit();
         } else if (id == R.id.nav_register) {
-            Intent i = new Intent(this, RegistryActivity.class);
-            startActivity(i);
+            RegistryFragment registryFragment = new RegistryFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, registryFragment, "registryFragment");
+            ft.commit();
         } else if (id == R.id.nav_search_route) {
-            Intent i = new Intent(this, SearchDestinationActivity.class);
-            startActivity(i);
+            SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
+            ft.commit();
         } else if (id == R.id.nav_pre_route) {
-            Intent i = new Intent(this, RoutesFoundActivity.class);
-            startActivity(i);
+
+            RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+            ft.commit();
         }
 
 
