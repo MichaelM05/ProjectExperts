@@ -14,9 +14,9 @@
         android:id="@+id/area_sites_add"
         android:layout_below="@+id/area_name_route"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal" >
+        android:orientation="vertical" >
 
 
         <android.support.v7.widget.RecyclerView
@@ -24,31 +24,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipToPadding="false"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            android:layout_weight="10"/>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/area_typeActivity"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal" >
 
 
         <Button
             android:id="@+id/btn_add_site"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:backgroundTint="@color/colorPrimary"
             android:drawableLeft="@drawable/shopping_cart_loaded_filled_50"
             android:text="Agregar sitios"
-            android:textColor="@android:color/white" />
-
+            android:textColor="@android:color/white"
+            />
 
     </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/area_name_route"
