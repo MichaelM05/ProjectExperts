@@ -1,7 +1,7 @@
 package com.mjb.projectexperts;
 
-import android.content.Context;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +15,15 @@ import com.mjb.projectexperts.Domain.Route;
 
 import java.util.ArrayList;
 
+import layout.ModifyRouteFragment;
+
 /**
  * Created by mm on 03/05/2017.
  */
 public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHolder> {
 
 
-    private Context mContext;
+    private Fragment mContext;
     private ArrayList<Route> routeList;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txvNameRoute;
@@ -37,7 +39,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
     }
 
 
-    public AddSiteAdapter(Context mContext, ArrayList<Route> phoneList) {
+    public AddSiteAdapter(Fragment mContext, ArrayList<Route> phoneList) {
         this.mContext = mContext;
         this.routeList = phoneList;
     }
@@ -70,8 +72,10 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
             @Override
             public void onClick(View v) {
 
-                Intent main = new Intent(mContext, ModifyRouteActivity.class);
-                mContext.startActivity(main);
+                ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
+                FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                ft.commit();
 
             }
 

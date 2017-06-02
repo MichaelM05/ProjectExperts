@@ -51,7 +51,7 @@ public class MainFragment extends Fragment {
                     "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
         }
 
-        adapter = new RouteAdapter(v.getContext(), routeList);
+        adapter = new RouteAdapter(this, routeList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);

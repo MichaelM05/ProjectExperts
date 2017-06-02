@@ -31,9 +31,9 @@ public class LoginFragment extends Fragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateRouteFragment createRouteFragment = new CreateRouteFragment();
+                WelcomeFragment welcomeFragment = new WelcomeFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, createRouteFragment, "createRouteFragment");
+                ft.replace(R.id.frame, welcomeFragment, "welcomeFragment");
                 ft.commit();
                 //finish();
             }

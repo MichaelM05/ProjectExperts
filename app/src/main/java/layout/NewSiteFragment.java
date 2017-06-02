@@ -1,36 +1,49 @@
-package com.mjb.projectexperts;
+package layout;
 
-import android.content.Intent;
+
 import android.content.res.Resources;
 import android.graphics.Rect;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
-
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.NewRouteAdapter;
+import com.mjb.projectexperts.R;
 
 import java.util.ArrayList;
 
-public class NewSiteActivity extends AppCompatActivity {
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class NewSiteFragment extends Fragment {
+
 
     private RecyclerView recyclerView;
     private NewRouteAdapter adapter;
     private ArrayList<Route> routeList;
 
+    public NewSiteFragment() {
+        // Required empty public constructor
+    }
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_site);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
 
+        View v = inflater.inflate(R.layout.fragment_new_site, container, false);
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
 
@@ -41,21 +54,26 @@ public class NewSiteActivity extends AppCompatActivity {
 
         adapter = new NewRouteAdapter(this, routeList);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
 
-        Button btnCreate = (Button)findViewById(R.id.btn_accept_create);
+        Button btnCreate = (Button)v.findViewById(R.id.btn_accept_create);
         btnCreate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent main = new Intent(NewSiteActivity.this, CreateRoute.class);
-                startActivity(main);
-            }
+         @Override
+         public void onClick(View v) {
+             CreateRouteFragment createRouteFragment = new CreateRouteFragment();
+             FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+             ft.replace(R.id.frame, createRouteFragment, "createRouteFragment");
+             ft.commit();
+         }
         });
+
+
+        return v;
     }
 
 

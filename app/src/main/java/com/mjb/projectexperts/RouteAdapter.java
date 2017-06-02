@@ -1,7 +1,7 @@
 package com.mjb.projectexperts;
 
-import android.content.Context;
-import android.content.Intent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +15,11 @@ import com.mjb.projectexperts.Domain.Route;
 
 import java.util.ArrayList;
 
-/**
- * Created by mm on 03/05/2017.
- */
+import layout.MapFragment;
 public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder> {
 
 
-    private Context mContext;
+    private Fragment mContext;
     private ArrayList<Route> routeList;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txvNameRoute, txvDescriptionRoute;
@@ -38,7 +36,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     }
 
 
-    public RouteAdapter(Context mContext, ArrayList<Route> phoneList) {
+    public RouteAdapter(Fragment mContext, ArrayList<Route> phoneList) {
         this.mContext = mContext;
         this.routeList = phoneList;
     }
@@ -72,8 +70,10 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
             @Override
             public void onClick(View v) {
 
-                Intent main = new Intent(mContext, MapActivity.class);
-                mContext.startActivity(main);
+                MapFragment mapFragment = new MapFragment();
+                FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, mapFragment, "mapFragment");
+                ft.commit();
 
             }
 

@@ -6,30 +6,25 @@ import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.widget.DefaultItemAnimator;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 
-import com.mjb.projectexperts.AddSiteAdapter;
-import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.R;
-
-import java.util.ArrayList;
+import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class CreateRouteFragment extends Fragment {
 
-
-    private RecyclerView recyclerView;
-    private AddSiteAdapter adapter;
-    private ArrayList<Route> routeList;
+    String[] duracion = {"1 HORA","2 HORA","3 HORA"};
+    String[] actividad = {"Actividad 1","Actividad 2"};
+    String[] distancia = {"1 KM","2 KM"};
 
     public CreateRouteFragment() {
         // Required empty public constructor
@@ -42,22 +37,38 @@ public class CreateRouteFragment extends Fragment {
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_create_route, container, false);
-        recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        routeList = new ArrayList<>();
+        ArrayAdapter<String> arrayAdapterLocation = new ArrayAdapter<String>(v.getContext(),
+                android.R.layout.simple_dropdown_item_1line, actividad);
+        MaterialBetterSpinner materialDesignSpinnerLocation = (MaterialBetterSpinner)
+                v.findViewById(R.id.spinner_actividad);
+        materialDesignSpinnerLocation.setAdapter(arrayAdapterLocation);
 
-        for(int i = 0; i < 4; i++){
-            routeList.add(new Route("Sitio " + i, "Descripción",
-                    "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
-        }
+        ArrayAdapter<String> arrayAdapterActivity = new ArrayAdapter<String>(v.getContext(),
+                android.R.layout.simple_dropdown_item_1line, distancia);
+        MaterialBetterSpinner materialDesignSpinnerActivity = (MaterialBetterSpinner)
+                v.findViewById(R.id.spinner_distancia);
+        materialDesignSpinnerActivity.setAdapter(arrayAdapterActivity);
 
-        adapter = new AddSiteAdapter(v.getContext(), routeList);
+        ArrayAdapter<String> arrayAdapterTT = new ArrayAdapter<String>(v.getContext(),
+                android.R.layout.simple_dropdown_item_1line, duracion);
+        MaterialBetterSpinner materialDesignSpinnerTT = (MaterialBetterSpinner)
+                v.findViewById(R.id.spinner_duracion);
+        materialDesignSpinnerTT.setAdapter(arrayAdapterTT);
 
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new CreateRouteFragment.GridSpacingItemDecoration(2, dpToPx(10), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
+
+        Button btnAccept = (Button)v.findViewById(R.id.btn_accept_search);
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AddSitesFragment addSitesFragment = new AddSitesFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, addSitesFragment, "routesFoundFragment");
+                ft.commit();
+            }
+        });
+
+
 
         return v;
     }

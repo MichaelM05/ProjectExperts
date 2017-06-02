@@ -15,20 +15,21 @@ import android.view.ViewGroup;
 
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.R;
-import com.mjb.projectexperts.RouteAdapter;
+import com.mjb.projectexperts.RouteModifyAdapter;
 
 import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class RoutesFoundFragment extends Fragment {
+public class MyRoutesFragment extends Fragment {
+
 
     private RecyclerView recyclerView;
-    private RouteAdapter adapter;
+    private RouteModifyAdapter adapter;
     private ArrayList<Route> routeList;
 
-    public RoutesFoundFragment() {
+    public MyRoutesFragment() {
         // Required empty public constructor
     }
 
@@ -36,7 +37,6 @@ public class RoutesFoundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_routes_found, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
@@ -48,11 +48,11 @@ public class RoutesFoundFragment extends Fragment {
                     "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
         }
 
-        adapter = new RouteAdapter(this, routeList);
+        adapter = new RouteModifyAdapter(this, routeList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new RoutesFoundFragment.GridSpacingItemDecoration(2, dpToPx(10), true));
+        recyclerView.addItemDecoration(new MyRoutesFragment.GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 

@@ -17,49 +17,47 @@ import java.util.ArrayList;
 
 import layout.ModifyRouteFragment;
 
-/**
- * Created by mm on 03/05/2017.
- */
-public class NewRouteAdapter extends RecyclerView.Adapter<NewRouteAdapter.MyViewHolder> {
+public class RouteModifyAdapter extends RecyclerView.Adapter<RouteModifyAdapter.MyViewHolder> {
 
 
     private Fragment mContext;
-    private ArrayList<Route> newRouteList;
+    private ArrayList<Route> routeList;
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView txvNameRoute;
+        public TextView txvNameRoute, txvDescriptionRoute;
         public ImageView imcRoute;
-        public Button btnAdd;
+        public Button btnSearch;
 
         public MyViewHolder(View view) {
             super(view);
             txvNameRoute = (TextView) view.findViewById(R.id.txvNameRoute);
+            txvDescriptionRoute = (TextView) view.findViewById(R.id.txvDescriptionRoute);
             imcRoute = (ImageView) view.findViewById(R.id.imc_route);
-            btnAdd = (Button) view.findViewById(R.id.btn_add);
-
+            btnSearch = (Button) view.findViewById(R.id.btn_view);
         }
     }
 
 
-    public NewRouteAdapter(Fragment mContext, ArrayList<Route> routeList) {
+    public RouteModifyAdapter(Fragment mContext, ArrayList<Route> phoneList) {
         this.mContext = mContext;
-        this.newRouteList = routeList;
+        this.routeList = phoneList;
     }
 
 
 
     @Override
-    public NewRouteAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RouteModifyAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.new_route_card, parent, false);
+                .inflate(R.layout.routes_card, parent, false);
 
         return new MyViewHolder(itemView);
 
     }
 
     @Override
-    public void onBindViewHolder(final NewRouteAdapter.MyViewHolder holder, int position) {
-        final Route route = newRouteList.get(position);
+    public void onBindViewHolder(final RouteModifyAdapter.MyViewHolder holder, int position) {
+        final Route route = routeList.get(position);
         holder.txvNameRoute.setText(route.getNameRoute());
+        holder.txvDescriptionRoute.setText(route.getDescriptionRoute());
 
         try {
             Glide.with(mContext).load(route.getImage()).into(holder.imcRoute);
@@ -69,15 +67,14 @@ public class NewRouteAdapter extends RecyclerView.Adapter<NewRouteAdapter.MyView
         }
 
 
-        holder.btnAdd.setOnClickListener(new View.OnClickListener() {
+        holder.btnSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
+                ModifyRouteFragment modifyRouteFragment = new ModifyRouteFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                ft.replace(R.id.frame, modifyRouteFragment, "modifyRouteFragment");
                 ft.commit();
-
 
             }
 
@@ -88,7 +85,7 @@ public class NewRouteAdapter extends RecyclerView.Adapter<NewRouteAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return newRouteList.size();
+        return routeList.size();
     }
 
 
