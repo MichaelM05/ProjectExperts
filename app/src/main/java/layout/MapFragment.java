@@ -6,12 +6,30 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
+import com.google.maps.android.PolyUtil;
+import com.mjb.projectexperts.Domain.VolleyS;
 import com.mjb.projectexperts.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.List;
 
 import static com.mjb.projectexperts.R.id.map;
 
@@ -20,6 +38,9 @@ import static com.mjb.projectexperts.R.id.map;
  */
 public class MapFragment extends Fragment implements OnMapReadyCallback {
 
+    private VolleyS volley;
+    protected RequestQueue fRequestQueue;
+    String points;
 
     public MapFragment() {
         // Required empty public constructor
@@ -30,18 +51,98 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_map, container, false);
+
+        points = "";
+        volley = VolleyS.getInstance(getActivity().getApplicationContext());
+        fRequestQueue = volley.getRequestQueue();
+
         com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
                 .findFragmentById(map);
         mapFragment.getMapAsync(this);
-
-        // Inflate the layout for this fragment
+        makeRequest();
         return v;
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(0, 0))
-                .title("Marker"));
+
+
+
+        if (!points.equals("")) {
+            List<LatLng> latLngs = PolyUtil.decode(points);
+            googleMap.addPolyline(new PolylineOptions().addAll(latLngs));
+            CameraUpdate center =
+                    CameraUpdateFactory.newLatLng(latLngs.get(0));
+            CameraUpdate zoom = CameraUpdateFactory.zoomTo(10);
+            googleMap.moveCamera(center);
+            googleMap.animateCamera(zoom);
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLngs.get(0))
+                    .title("Origen"));
+            googleMap.addMarker(new MarkerOptions()
+                    .position(latLngs.get(latLngs.size()-1))
+                    .title("Destino"));
+        }
+    }
+
+
+    private void makeRequest(){
+        String url = "https://maps.googleapis.com/maps/api/directions/json?origin=Cartago,CR&destination=San+Jose,CR&key="+getString(R.string.google_api_key);
+        JsonObjectRequest request = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                //DO
+                try {
+
+                    JSONArray rutas =  jsonObject.getJSONArray("routes");
+                    JSONObject rutasContenido = rutas.getJSONObject(0);
+                    JSONObject ov_polyLine = rutasContenido.getJSONObject("overview_polyline");
+                    points = ov_polyLine.getString("points");
+                    System.out.println(points);
+                    updateMap();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                onConnectionFinished();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                onConnectionFailed(volleyError.toString());
+            }
+        });
+        addToQueue(request);
+    }
+
+    public void addToQueue(Request request) {
+        if (request != null) {
+            request.setTag(this);
+            if (fRequestQueue == null)
+                fRequestQueue = volley.getRequestQueue();
+            request.setRetryPolicy(new DefaultRetryPolicy(
+                    60000, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+            ));
+            onPreStartConnection();
+            fRequestQueue.add(request);
+        }
+    }
+
+    public void onPreStartConnection() {
+        getActivity().setProgressBarIndeterminateVisibility(true);
+    }
+
+    public void onConnectionFinished() {
+        getActivity().setProgressBarIndeterminateVisibility(false);
+    }
+
+    public void onConnectionFailed(String error) {
+        getActivity().setProgressBarIndeterminateVisibility(false);
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
+    }
+
+    public void updateMap(){
+        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
+                .findFragmentById(map);
+        mapFragment.getMapAsync(this);
     }
 }
