@@ -25,14 +25,14 @@ public class RouteModifyAdapter extends RecyclerView.Adapter<RouteModifyAdapter.
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txvNameRoute, txvDescriptionRoute;
         public ImageView imcRoute;
-        public Button btnSearch;
+        //public Button btnSearch;
 
         public MyViewHolder(View view) {
             super(view);
             txvNameRoute = (TextView) view.findViewById(R.id.txvNameRoute);
             txvDescriptionRoute = (TextView) view.findViewById(R.id.txvDescriptionRoute);
             imcRoute = (ImageView) view.findViewById(R.id.imc_route);
-            btnSearch = (Button) view.findViewById(R.id.btn_view);
+            //btnSearch = (Button) view.findViewById(R.id.btn_view);
         }
     }
 
@@ -67,7 +67,7 @@ public class RouteModifyAdapter extends RecyclerView.Adapter<RouteModifyAdapter.
         }
 
 
-        holder.btnSearch.setOnClickListener(new View.OnClickListener() {
+        holder.imcRoute.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
