@@ -108,7 +108,7 @@ public class TestApi extends AsyncTask<String, Integer, String> {
     protected void onPostExecute(String result) {
 
         JSONArray json_array = null;
-        JSONObject jObject; 
+        JSONObject jObject;
         try {
             jObject = new JSONObject(result);
             json_array = jObject.optJSONArray("Routes");
