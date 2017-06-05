@@ -1,10 +1,10 @@
 package layout;
 
 
+
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.support.v4.app.Fragment;
 
+import com.mjb.projectexperts.Apis.TestApi;
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.R;
 import com.mjb.projectexperts.RouteAdapter;
@@ -44,14 +46,16 @@ public class MainFragment extends Fragment {
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        routeList = new ArrayList<>();
+        //new TestApi().execute("parametro1");
+        //routeList = TestApi.routeList;
 
+        routeList = new ArrayList<>();
         for(int i = 0; i < 4; i++){
             routeList.add(new Route("Ruta " + i, "Descripción",
                     "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
         }
 
-        adapter = new RouteAdapter(this, routeList);
+        adapter = new RouteAdapter(this,routeList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);

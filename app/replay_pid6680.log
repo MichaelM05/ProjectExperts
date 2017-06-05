@@ -1,0 +1,8 @@
+JvmtiExport can_access_local_variables 0
+JvmtiExport can_hotswap_or_post_breakpoint 0
+JvmtiExport can_post_on_exceptions 0
+# 109 ciObject found
+ciMethod com/android/dx/rop/code/Insn getOpcode ()Lcom/android/dx/rop/code/Rop; 1025 1 128 0 0
+ciMethod com/android/dx/rop/code/Rop getOpcode ()I 1025 1 128 0 0
+ciMethod com/android/dx/ssa/NormalSsaInsn isNormalMoveInsn ()Z 2521 1 6459 0 -1
+ciMethodData com/android/dx/ssa/NormalSsaInsn isNormalMoveInsn ()Z 2 6459 orig 264 8 193 144 80 0 0 0 0 96 160 55 27 0 0 0 0 224 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 77 68 79 32 101 120 116 114 97 32 100 97 116 97 32 108 111 99 107 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 59 1 0 0 1 192 0 0 1 0 0 0 0 0 0 0 0 0 0 0 2 0 0 0 0 0 6 0 2 0 0 0 152 0 0 0 255 255 255 255 5 0 4 0 0 0 0 0 data 19 0x40005 0x513 0x1dd84940 0x47d 0x1dd849f0 0xe75 0x70005 0x0 0x1dd84aa0 0x1803 0x1dd84aa0 0x1 0xb0007 0x1622 0x38 0x1e1 0xf0003 0x1e1 0x18 oops 4
