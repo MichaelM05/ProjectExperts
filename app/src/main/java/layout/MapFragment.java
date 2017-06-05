@@ -17,8 +17,11 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
@@ -31,16 +34,15 @@ import org.json.JSONObject;
 
 import java.util.List;
 
-import static com.mjb.projectexperts.R.id.map;
-
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapFragment extends Fragment implements OnMapReadyCallback {
+public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private VolleyS volley;
     protected RequestQueue fRequestQueue;
     String points;
+    MapView mMapView;
 
     public MapFragment() {
         // Required empty public constructor
@@ -50,15 +52,26 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_map, container, false);
+
+       View v = inflater.inflate(R.layout.fragment_map, container, false);
+
 
         points = "";
         volley = VolleyS.getInstance(getActivity().getApplicationContext());
         fRequestQueue = volley.getRequestQueue();
 
-        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
-                .findFragmentById(map);
-        mapFragment.getMapAsync(this);
+        mMapView = (MapView) v.findViewById(R.id.map);
+        mMapView.onCreate(savedInstanceState);
+
+        mMapView.onResume(); // needed to get the map to display immediately
+
+        try {
+            MapsInitializer.initialize(getActivity().getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mMapView.getMapAsync(this);
         makeRequest();
         return v;
     }
@@ -67,7 +80,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     public void onMapReady(GoogleMap googleMap) {
 
 
-
+        googleMap.setOnMarkerClickListener(this);
         if (!points.equals("")) {
             List<LatLng> latLngs = PolyUtil.decode(points);
             googleMap.addPolyline(new PolylineOptions().addAll(latLngs));
@@ -82,6 +95,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
             googleMap.addMarker(new MarkerOptions()
                     .position(latLngs.get(latLngs.size()-1))
                     .title("Destino"));
+            System.out.println("Pinto");
         }
     }
 
@@ -98,7 +112,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
                     JSONObject rutasContenido = rutas.getJSONObject(0);
                     JSONObject ov_polyLine = rutasContenido.getJSONObject("overview_polyline");
                     points = ov_polyLine.getString("points");
-                    System.out.println(points);
                     updateMap();
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -141,8 +154,37 @@ public class MapFragment extends Fragment implements OnMapReadyCallback {
     }
 
     public void updateMap(){
-        com.google.android.gms.maps.MapFragment mapFragment = (com.google.android.gms.maps.MapFragment) getActivity().getFragmentManager()
-                .findFragmentById(map);
-        mapFragment.getMapAsync(this);
+        mMapView.getMapAsync(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        Toast.makeText(getActivity(), "Latitude:" + marker.getPosition().latitude + ", Longitude:"
+                + marker.getPosition().longitude, Toast.LENGTH_LONG).show();
+        return false;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    public void onLowMemory() {
+        super.onLowMemory();
+        mMapView.onLowMemory();
     }
 }
