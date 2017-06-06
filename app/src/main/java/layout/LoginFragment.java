@@ -2,9 +2,11 @@ package layout;
 
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -34,6 +36,11 @@ public class LoginFragment extends Fragment {
                 WelcomeFragment welcomeFragment = new WelcomeFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, welcomeFragment, "welcomeFragment");
+                ft.addToBackStack("welcomeFragment");
+                NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                Menu nav_Menu = navigationView.getMenu();
+                nav_Menu.findItem(R.id.nav_login).setVisible(false);
+                nav_Menu.findItem(R.id.nav_register).setVisible(false);
                 ft.commit();
                 //finish();
             }

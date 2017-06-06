@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -73,6 +72,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
                 MapFragment mapFragment = new MapFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, mapFragment, "mapFragment");
+                ft.addToBackStack("mapFragment");
                 ft.commit();
 
             }

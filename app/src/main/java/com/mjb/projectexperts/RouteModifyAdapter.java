@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,6 +73,7 @@ public class RouteModifyAdapter extends RecyclerView.Adapter<RouteModifyAdapter.
                 ModifyRouteFragment modifyRouteFragment = new ModifyRouteFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, modifyRouteFragment, "modifyRouteFragment");
+                ft.addToBackStack("modifyRouteFragment");
                 ft.commit();
 
             }

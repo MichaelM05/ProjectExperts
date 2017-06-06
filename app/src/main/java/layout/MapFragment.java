@@ -164,6 +164,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
         DetailSiteFragment detailSiteFragment = new DetailSiteFragment();
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame, detailSiteFragment, "detailSiteFragment");
+        ft.addToBackStack("detailSiteFragment");
         ft.commit();
         return false;
     }

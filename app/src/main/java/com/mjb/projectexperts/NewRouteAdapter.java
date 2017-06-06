@@ -76,6 +76,7 @@ public class NewRouteAdapter extends RecyclerView.Adapter<NewRouteAdapter.MyView
                 ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                ft.addToBackStack("modifyRouteFragment");
                 ft.commit();
 
 

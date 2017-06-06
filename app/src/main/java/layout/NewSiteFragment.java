@@ -68,6 +68,7 @@ public class NewSiteFragment extends Fragment {
              CreateRouteFragment createRouteFragment = new CreateRouteFragment();
              FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
              ft.replace(R.id.frame, createRouteFragment, "createRouteFragment");
+             ft.addToBackStack("createRouteFragment");
              ft.commit();
          }
         });

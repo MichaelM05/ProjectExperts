@@ -1,7 +1,6 @@
 package layout;
 
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -35,6 +34,7 @@ public class RegistryFragment extends Fragment {
                 SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
+                ft.addToBackStack("searchDestinationFragment");
                 ft.commit();
             }
         });

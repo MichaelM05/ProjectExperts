@@ -64,6 +64,7 @@ public class ModifyRouteFragment extends Fragment {
                 AddSitesFragment addSitesFragment = new AddSitesFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, addSitesFragment, "addSitesFragment");
+                ft.addToBackStack("addSitesFragment");
                 ft.commit();
             }
         });

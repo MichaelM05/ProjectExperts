@@ -45,6 +45,7 @@ public class WelcomeFragment extends Fragment {
                 MyRoutesFragment myRoutesFragment = new MyRoutesFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, myRoutesFragment, "myRoutesFragment");
+                ft.addToBackStack("myRoutesFragment");
                 ft.commit();
             }
         });

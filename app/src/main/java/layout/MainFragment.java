@@ -5,6 +5,7 @@ package layout;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,9 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.support.v4.app.Fragment;
 
-import com.mjb.projectexperts.Apis.TestApi;
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.R;
 import com.mjb.projectexperts.RouteAdapter;
@@ -71,6 +70,7 @@ public class MainFragment extends Fragment {
                 SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
+                ft.addToBackStack("searchDestinationFragment");
                 ft.commit();
                 //finish();
             }

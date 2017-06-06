@@ -75,6 +75,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
                 ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                ft.addToBackStack("modifyRouteFragment");
                 ft.commit();
 
             }

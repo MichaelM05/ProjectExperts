@@ -119,6 +119,7 @@ public class SearchDestinationFragment extends Fragment
                 RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+                ft.addToBackStack("routesFoundFragment");
 
 
                 if(lastLocation == null){

@@ -94,28 +94,33 @@ public class MenuActivity extends AppCompatActivity
             MainFragment mainFragment = new MainFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, mainFragment, "mainFragment");
+            ft.addToBackStack("mainFragment");
             ft.commit();
         }
         else if (id == R.id.nav_login) {
             LoginFragment loginFragment = new LoginFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, loginFragment, "loginFragment");
+            ft.addToBackStack("loginFragment");
             ft.commit();
         } else if (id == R.id.nav_register) {
             RegistryFragment registryFragment = new RegistryFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, registryFragment, "registryFragment");
+            ft.addToBackStack("registryFragment");
             ft.commit();
         } else if (id == R.id.nav_search_route) {
             SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
+            ft.addToBackStack("searchDestinationFragment");
             ft.commit();
         } else if (id == R.id.nav_pre_route) {
 
             RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+            ft.addToBackStack("routesFoundFragment");
             ft.commit();
         }
 
