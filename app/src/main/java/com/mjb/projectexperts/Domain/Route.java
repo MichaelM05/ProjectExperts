@@ -1,5 +1,8 @@
 package com.mjb.projectexperts.Domain;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by mm on 03/05/2017.
  */
@@ -14,6 +17,20 @@ public class Route {
         this.descriptionRoute = descriptionRoute;
         this.image = image;
     }
+
+    public Route(JSONObject json){
+
+        try {
+            this.nameRoute = json.getString("name");
+            this.descriptionRoute = json.getString("desciption");
+            this.image = json.getString("url");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
     public String getNameRoute() {
         return nameRoute;

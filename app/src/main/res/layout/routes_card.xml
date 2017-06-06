@@ -50,7 +50,7 @@
                 android:textSize="@dimen/songs_count" />
 
 
-            <Button
+            <!--<Button
                  android:id="@+id/btn_view"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
                  style="@style/Widget.AppCompat.Button.Borderless"
                  android:text="@string/btn_view_car"
                  android:textColor="@android:color/black"
-                 />
+                 />-->
 
         </RelativeLayout>
 
