@@ -2,11 +2,9 @@ package layout;
 
 
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -46,31 +44,6 @@ public class DetailSiteFragment extends Fragment {
 
             }
         });
-
-
-
-        /**
-            final VideoView videoView =
-                    (VideoView) v.findViewById(R.id.videoView);
-
-            videoView.setVideoPath(
-                    "http://www.ebookfrenzy.com/android_book/movie.mp4");
-
-            MediaController mediaController = new
-                    MediaController(getContext());
-            mediaController.setAnchorView(videoView);
-            videoView.setMediaController(mediaController);
-
-            videoView.setOnPreparedListener(new
-            MediaPlayer.OnPreparedListener()  {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-               System.out.println("Duration = " +videoView.getDuration());
-            }
-            });
-
-            videoView.start();
-         **/
 
         return v;
     }

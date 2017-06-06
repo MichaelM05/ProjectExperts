@@ -41,6 +41,9 @@ public class LoginFragment extends Fragment {
                 Menu nav_Menu = navigationView.getMenu();
                 nav_Menu.findItem(R.id.nav_login).setVisible(false);
                 nav_Menu.findItem(R.id.nav_register).setVisible(false);
+                nav_Menu.findItem(R.id.nav_routes_client).setVisible(true);
+                nav_Menu.findItem(R.id.nav_signout).setVisible(true);
+                nav_Menu.findItem(R.id.nav_welcome_client).setVisible(true);
                 ft.commit();
                 //finish();
             }

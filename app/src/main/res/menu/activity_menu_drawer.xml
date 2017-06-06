@@ -21,11 +21,13 @@
             <item
                 android:id="@+id/nav_welcome_client"
                 android:icon="@drawable/cast_ic_notification_1"
-                android:title="@string/lbl_welcome_client" />
+                android:title="@string/lbl_welcome_client"
+                android:visible="false"/>
             <item
                 android:id="@+id/nav_routes_client"
                 android:icon="@drawable/home_48"
-                android:title="@string/lbl_routes_client" />
+                android:title="@string/lbl_routes_client"
+                android:visible="false"/>
         </menu>
     </item>
 
@@ -43,7 +45,8 @@
             <item
                 android:id="@+id/nav_signout"
                 android:icon="@drawable/user_folder_48"
-                android:title="@string/lbl_sing_out" />
+                android:title="@string/lbl_sing_out"
+                android:visible="false"/>
         </menu>
     </item>
 

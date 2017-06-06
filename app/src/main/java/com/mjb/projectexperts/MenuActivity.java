@@ -1,7 +1,5 @@
 package com.mjb.projectexperts;
 
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -10,12 +8,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+
+import com.mjb.projectexperts.Domain.Route;
+
+import java.util.ArrayList;
 
 import layout.LoginFragment;
 import layout.MainFragment;
@@ -29,8 +28,8 @@ public class MenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     public Location lastLocation;
-
-
+    public String[] parameters;
+    public ArrayList<Route> routeList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,12 +75,6 @@ public class MenuActivity extends AppCompatActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -141,6 +134,13 @@ public class MenuActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, mainFragment, "mainFragment");
             ft.addToBackStack("mainFragment");
+            NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+            Menu nav_Menu = navigationView.getMenu();
+            nav_Menu.findItem(R.id.nav_login).setVisible(true);
+            nav_Menu.findItem(R.id.nav_register).setVisible(true);
+            nav_Menu.findItem(R.id.nav_routes_client).setVisible(false);
+            nav_Menu.findItem(R.id.nav_signout).setVisible(false);
+            nav_Menu.findItem(R.id.nav_welcome_client).setVisible(false);
             ft.commit();
         }
 

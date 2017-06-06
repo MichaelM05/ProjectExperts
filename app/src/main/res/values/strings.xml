@@ -30,7 +30,7 @@
     <string name="lbl_canton_registry">Cantón</string>
     <string name="lbl_district_registry">Distrito</string>
     <string name="lbl_sing_out">Cerrar sesión</string>
-    <string name="lbl_welcome_client">Inicio cliente</string>
+    <string name="lbl_welcome_client">Bienvenido</string>
     <string name="lbl_routes_client">Mis rutas</string>
     <string name="lbl_login">Login</string>
     <!-- -->

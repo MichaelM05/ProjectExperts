@@ -27,6 +27,7 @@ public class RoutesFoundFragment extends Fragment {
     private RecyclerView recyclerView;
     private RouteAdapter adapter;
     private ArrayList<Route> routeList;
+    public String lat,longt;
 
     public RoutesFoundFragment() {
         // Required empty public constructor
@@ -36,7 +37,6 @@ public class RoutesFoundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_routes_found, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);

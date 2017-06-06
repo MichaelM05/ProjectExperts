@@ -37,7 +37,7 @@ public class SearchDestinationFragment extends Fragment
     String[] duracion = {"1 - 2 Horas","2 - 4 Horas","4 - 6 Horas","6 - 8 Horas","8 o más Horas"};
     String[] actividad = {"Cultural","Montaña","Ecológico","Recreativo"};
     String[] distancia = {"1 - 2 Km","2 - 4 Km","4 - 6 Km","6 - 8 Km","8 o más Km"};
-    String[] precio = {"$0 - $5","$5 - $10","$010 - $20","$20 - $30","$30 o más"};
+    String[] precio = {"$0 - $5","$5 - $10","$10 - $20","$20 - $30","$30 o más"};
     String[] partida = {"Mi ubicación","San José","Cartago","Alajuela"};
 
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
@@ -50,7 +50,11 @@ public class SearchDestinationFragment extends Fragment
     ProgressDialog progressDialog;
     Location lastLocation;
     FragmentTransaction ft;
-
+    MaterialBetterSpinner materialDesignSpinnerDistance;
+    MaterialBetterSpinner materialDesignSpinnerActivity;
+    MaterialBetterSpinner materialDesignSpinnerPrice;
+    MaterialBetterSpinner materialDesignSpinnerTT;
+    MaterialBetterSpinner materialDesignSpinnerOrigin;
 
     public SearchDestinationFragment() {
         // Required empty public constructor
@@ -65,40 +69,55 @@ public class SearchDestinationFragment extends Fragment
 
         lastLocation = ((MenuActivity)getActivity()).lastLocation;
 
-        ArrayAdapter<String> arrayAdapterLocation = new ArrayAdapter<String>(v.getContext(),
+        ArrayAdapter<String> arrayAdapterDistance = new ArrayAdapter<String>(v.getContext(),
                 android.R.layout.simple_dropdown_item_1line, distancia);
-        MaterialBetterSpinner materialDesignSpinnerLocation = (MaterialBetterSpinner)
+        materialDesignSpinnerDistance = (MaterialBetterSpinner)
                 v.findViewById(R.id.spinner_distancia);
-        materialDesignSpinnerLocation.setAdapter(arrayAdapterLocation);
-        materialDesignSpinnerLocation.setText(distancia[0]);
+        materialDesignSpinnerDistance.setAdapter(arrayAdapterDistance);
+
 
         ArrayAdapter<String> arrayAdapterActivity = new ArrayAdapter<String>(v.getContext(),
                 android.R.layout.simple_dropdown_item_1line, actividad);
-        MaterialBetterSpinner materialDesignSpinnerActivity = (MaterialBetterSpinner)
+        materialDesignSpinnerActivity = (MaterialBetterSpinner)
                 v.findViewById(R.id.spinner_actividad);
         materialDesignSpinnerActivity.setAdapter(arrayAdapterActivity);
-        materialDesignSpinnerActivity.setText(actividad[0]);
+
 
         ArrayAdapter<String> arrayAdapterTT = new ArrayAdapter<String>(v.getContext(),
                 android.R.layout.simple_dropdown_item_1line, duracion);
-        MaterialBetterSpinner materialDesignSpinnerTT = (MaterialBetterSpinner)
+        materialDesignSpinnerTT = (MaterialBetterSpinner)
                 v.findViewById(R.id.spinner_duracion);
         materialDesignSpinnerTT.setAdapter(arrayAdapterTT);
-        materialDesignSpinnerTT.setText(duracion[0]);
+
 
         ArrayAdapter<String> arrayAdapterPrice = new ArrayAdapter<String>(v.getContext(),
                 android.R.layout.simple_dropdown_item_1line, precio);
-        MaterialBetterSpinner materialDesignSpinnerPrice = (MaterialBetterSpinner)
+        materialDesignSpinnerPrice = (MaterialBetterSpinner)
                 v.findViewById(R.id.spinner_price);
         materialDesignSpinnerPrice.setAdapter(arrayAdapterPrice);
-        materialDesignSpinnerPrice.setText(precio[0]);
+
 
         ArrayAdapter<String> arrayAdapterOrigin = new ArrayAdapter<String>(v.getContext(),
                 android.R.layout.simple_dropdown_item_1line, partida);
-        MaterialBetterSpinner materialDesignSpinnerOrigin = (MaterialBetterSpinner)
+        materialDesignSpinnerOrigin = (MaterialBetterSpinner)
                 v.findViewById(R.id.spinner_origin);
         materialDesignSpinnerOrigin.setAdapter(arrayAdapterOrigin);
-        materialDesignSpinnerOrigin.setText(partida[0]);
+
+        String [] parameters = ((MenuActivity) getActivity()).parameters;
+        if( parameters != null){
+            materialDesignSpinnerDistance.setText(parameters[0]);
+            materialDesignSpinnerActivity.setText(parameters[1]);
+            materialDesignSpinnerPrice.setText(parameters[2]);
+            materialDesignSpinnerTT.setText(parameters[3]);
+            materialDesignSpinnerOrigin.setText(parameters[4]);
+        }else{
+            materialDesignSpinnerDistance.setText(distancia[0]);
+            materialDesignSpinnerActivity.setText(actividad[0]);
+            materialDesignSpinnerTT.setText(duracion[0]);
+            materialDesignSpinnerPrice.setText(precio[0]);
+            materialDesignSpinnerOrigin.setText(partida[0]);
+        }
+
 
 
         progressDialog = new ProgressDialog(getActivity());
@@ -115,7 +134,13 @@ public class SearchDestinationFragment extends Fragment
             @Override
             public void onClick(View v) {
 
-
+                String[] parameters = new String[5];
+                parameters[0] = materialDesignSpinnerDistance.getText().toString();
+                parameters[1] = materialDesignSpinnerActivity.getText().toString();
+                parameters[2] = materialDesignSpinnerPrice.getText().toString();
+                parameters[3] = materialDesignSpinnerTT.getText().toString();
+                parameters[4] = materialDesignSpinnerOrigin.getText().toString();
+                ((MenuActivity) getActivity()).parameters = parameters;
                 RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
                 ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
