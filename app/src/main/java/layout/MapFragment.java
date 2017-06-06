@@ -3,6 +3,7 @@ package layout;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -95,7 +96,6 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
             googleMap.addMarker(new MarkerOptions()
                     .position(latLngs.get(latLngs.size()-1))
                     .title("Destino"));
-            System.out.println("Pinto");
         }
     }
 
@@ -161,6 +161,10 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     public boolean onMarkerClick(Marker marker) {
         Toast.makeText(getActivity(), "Latitude:" + marker.getPosition().latitude + ", Longitude:"
                 + marker.getPosition().longitude, Toast.LENGTH_LONG).show();
+        DetailSiteFragment detailSiteFragment = new DetailSiteFragment();
+        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.frame, detailSiteFragment, "detailSiteFragment");
+        ft.commit();
         return false;
     }
 

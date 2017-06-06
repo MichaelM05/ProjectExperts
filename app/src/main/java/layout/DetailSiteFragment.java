@@ -28,6 +28,29 @@ public class DetailSiteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_site, container, false);
         GridView gridView = (GridView) v.findViewById( R.id.GridView1 );
         gridView.setAdapter( new GridViewImageAdapter(v.getContext()) );
+    /**
+        final VideoView videoView =
+                (VideoView) v.findViewById(R.id.videoView);
+
+        videoView.setVideoPath(
+                "http://www.ebookfrenzy.com/android_book/movie.mp4");
+
+        MediaController mediaController = new
+                MediaController(getContext());
+        mediaController.setAnchorView(videoView);
+        videoView.setMediaController(mediaController);
+
+        videoView.setOnPreparedListener(new
+        MediaPlayer.OnPreparedListener()  {
+        @Override
+        public void onPrepared(MediaPlayer mp) {
+           System.out.println("Duration = " +videoView.getDuration());
+        }
+        });
+
+        videoView.start();
+     **/
+
         return v;
     }
 

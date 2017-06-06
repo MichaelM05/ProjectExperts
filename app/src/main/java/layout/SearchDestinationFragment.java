@@ -34,21 +34,22 @@ import static android.os.Build.VERSION_CODES.M;
 public class SearchDestinationFragment extends Fragment
         {
 
-    String[] duracion = {"1 HORA","2 HORA","3 HORA"};
-    String[] actividad = {"Actividad 1","Actividad 2"};
-    String[] distancia = {"1 KM","2 KM"};
-    String[] precio = {"100","200"};
-    String[] partida = {"Mi ubicación","San Jose"};
-            // The minimum distance to change Updates in meters
-            private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
-            // The minimum time between updates in milliseconds
-            private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
-            protected LocationManager locationManager;
-            protected Context context;
-            protected boolean gps_enabled, network_enabled;
-            private LocationListener locationListener;
-            ProgressDialog progressDialog;
-            Location lastLocation;
+    String[] duracion = {"1 - 2 Horas","2 - 4 Horas","4 - 6 Horas","6 - 8 Horas","8 o más Horas"};
+    String[] actividad = {"Cultural","Montaña","Ecológico","Recreativo"};
+    String[] distancia = {"1 - 2 Km","2 - 4 Km","4 - 6 Km","6 - 8 Km","8 o más Km"};
+    String[] precio = {"$0 - $5","$5 - $10","$010 - $20","$20 - $30","$30 o más"};
+    String[] partida = {"Mi ubicación","San José","Cartago","Alajuela"};
+
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
+
+    private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
+    protected LocationManager locationManager;
+    protected Context context;
+    protected boolean gps_enabled, network_enabled;
+    private LocationListener locationListener;
+    ProgressDialog progressDialog;
+    Location lastLocation;
+    FragmentTransaction ft;
 
 
     public SearchDestinationFragment() {
@@ -116,9 +117,9 @@ public class SearchDestinationFragment extends Fragment
 
 
                 RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft = getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
-                //ft.commit();
+
 
                 if(lastLocation == null){
                     getLocation();
@@ -126,6 +127,7 @@ public class SearchDestinationFragment extends Fragment
                 }else{
                     Toast.makeText(getActivity(), "Latitude:" + lastLocation.getLatitude() + ", Longitude:"
                             + lastLocation.getLongitude(), Toast.LENGTH_LONG).show();
+                    ft.commit();
                 }
 
 
@@ -234,6 +236,7 @@ public class SearchDestinationFragment extends Fragment
                         progressDialog.dismiss();
                         Toast.makeText(getActivity(), "Latitude:" + lastLocation.getLatitude() + ", Longitude:"
                                 + lastLocation.getLongitude(), Toast.LENGTH_LONG).show();
+                        ft.commit();
                     }
 
                     @Override
