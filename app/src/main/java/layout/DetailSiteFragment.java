@@ -2,10 +2,14 @@ package layout;
 
 
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.GridView;
 
 import com.mjb.projectexperts.GridViewImageAdapter;
@@ -28,28 +32,45 @@ public class DetailSiteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_detail_site, container, false);
         GridView gridView = (GridView) v.findViewById( R.id.GridView1 );
         gridView.setAdapter( new GridViewImageAdapter(v.getContext()) );
-    /**
-        final VideoView videoView =
-                (VideoView) v.findViewById(R.id.videoView);
 
-        videoView.setVideoPath(
-                "http://www.ebookfrenzy.com/android_book/movie.mp4");
+        Button btnAccept = (Button)v.findViewById(R.id.btn_view_video);
 
-        MediaController mediaController = new
-                MediaController(getContext());
-        mediaController.setAnchorView(videoView);
-        videoView.setMediaController(mediaController);
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                VideoRouteFragment videoRouteFragment = new VideoRouteFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, videoRouteFragment, "videoRouteFragment");
+                ft.addToBackStack("videoRouteFragment");
+                ft.commit();
 
-        videoView.setOnPreparedListener(new
-        MediaPlayer.OnPreparedListener()  {
-        @Override
-        public void onPrepared(MediaPlayer mp) {
-           System.out.println("Duration = " +videoView.getDuration());
-        }
+            }
         });
 
-        videoView.start();
-     **/
+
+
+        /**
+            final VideoView videoView =
+                    (VideoView) v.findViewById(R.id.videoView);
+
+            videoView.setVideoPath(
+                    "http://www.ebookfrenzy.com/android_book/movie.mp4");
+
+            MediaController mediaController = new
+                    MediaController(getContext());
+            mediaController.setAnchorView(videoView);
+            videoView.setMediaController(mediaController);
+
+            videoView.setOnPreparedListener(new
+            MediaPlayer.OnPreparedListener()  {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+               System.out.println("Duration = " +videoView.getDuration());
+            }
+            });
+
+            videoView.start();
+         **/
 
         return v;
     }

@@ -73,7 +73,26 @@
 
     </LinearLayout>
 
-z
+    <LinearLayout
+        android:id="@+id/bottom_bar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_below="@+id/area_gallery"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_view_video"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableLeft="@drawable/cast_abc_scrubber_control_to_pressed_mtrl_000"
+            android:backgroundTint="@color/colorAccent"
+            android:text="@string/btn_view_video"
+            android:layout_marginTop="10dp"
+            android:textColor="@android:color/white"
+            />
+    </LinearLayout>
 
 
 

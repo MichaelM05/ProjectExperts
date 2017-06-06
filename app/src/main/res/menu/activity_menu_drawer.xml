@@ -19,6 +19,19 @@
     <item android:title="@string/lbl_title_user">
         <menu>
             <item
+                android:id="@+id/nav_welcome_client"
+                android:icon="@drawable/cast_ic_notification_1"
+                android:title="@string/lbl_welcome_client" />
+            <item
+                android:id="@+id/nav_routes_client"
+                android:icon="@drawable/home_48"
+                android:title="@string/lbl_routes_client" />
+        </menu>
+    </item>
+
+    <item android:title="@string/lbl_login">
+        <menu>
+            <item
                 android:id="@+id/nav_login"
                 android:icon="@drawable/user_48"
                 android:title="@string/lbl_nav_login" />
@@ -26,6 +39,11 @@
                 android:id="@+id/nav_register"
                 android:icon="@drawable/user_folder_48"
                 android:title="@string/lbl_register" />
+
+            <item
+                android:id="@+id/nav_signout"
+                android:icon="@drawable/user_folder_48"
+                android:title="@string/lbl_sing_out" />
         </menu>
     </item>
 

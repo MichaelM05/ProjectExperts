@@ -29,6 +29,10 @@
     <string name="lbl_province_registry">Provincia</string>
     <string name="lbl_canton_registry">Cantón</string>
     <string name="lbl_district_registry">Distrito</string>
+    <string name="lbl_sing_out">Cerrar sesión</string>
+    <string name="lbl_welcome_client">Inicio cliente</string>
+    <string name="lbl_routes_client">Mis rutas</string>
+    <string name="lbl_login">Login</string>
     <!-- -->
 
     <!--String SearchDestinationActivity-->
@@ -50,7 +54,7 @@
     <string name="btn_delete_site">Eliminar</string>
     <string name="btn_create_route">Crear</string>
     <string name="btn_modify_route">Modificar</string>
-
+    <string name="btn_view_video">Ver video</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
