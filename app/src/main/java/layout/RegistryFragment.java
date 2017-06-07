@@ -68,7 +68,7 @@ public class RegistryFragment extends Fragment {
 
                 if(validateFields(user)) {
                     if (registry(v.getContext(), user)) {
-                        Toast.makeText(v.getContext(), "¡Bienvenido !" + user.getName(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(v.getContext(), "¡Bienvenido " + user.getName() + " !", Toast.LENGTH_SHORT).show();
 
                         SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
@@ -76,10 +76,10 @@ public class RegistryFragment extends Fragment {
                         ft.addToBackStack("searchDestinationFragment");
                         ft.commit();
                     } else {
-                        Toast.makeText(v.getContext(), "Error al registrarse", Toast.LENGTH_LONG).show();
+                        Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
                     }
                 }else{
-                    Toast.makeText(v.getContext(), "Datos erroneos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Datos erroneos", Toast.LENGTH_SHORT).show();
                 }
             }
         });

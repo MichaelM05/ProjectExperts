@@ -77,7 +77,7 @@ public class LoginFragment extends Fragment {
 
                     if(login(v.getContext(),userName,password)){
 
-                        Toast.makeText(v.getContext(), "¡Bienvenido !" + userName, Toast.LENGTH_LONG).show();
+                        Toast.makeText(v.getContext(), "¡Bienvenido " + userName + " !", Toast.LENGTH_SHORT).show();
                         WelcomeFragment welcomeFragment = new WelcomeFragment();
                         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.frame, welcomeFragment, "welcomeFragment");
@@ -91,11 +91,11 @@ public class LoginFragment extends Fragment {
                         nav_Menu.findItem(R.id.nav_welcome_client).setVisible(true);
                         ft.commit();
                     }else{
-                        Toast.makeText(v.getContext(), "usuario no registrado" + userName, Toast.LENGTH_LONG).show();
+                        Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
                     }
 
                 }else{
-                    Toast.makeText(v.getContext(), "Datos erroneos", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Datos erroneos", Toast.LENGTH_SHORT).show();
                 }
 
             }
