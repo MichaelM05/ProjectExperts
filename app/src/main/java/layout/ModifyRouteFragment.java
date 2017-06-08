@@ -44,10 +44,10 @@ public class ModifyRouteFragment extends Fragment {
 
         routeList = new ArrayList<>();
 
-        for(int i = 0; i < 4; i++){
-            routeList.add(new Route("Sitio " + i, "Descripción",
-                    "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
-        }
+       // for(int i = 0; i < 4; i++){
+           // routeList.add(new Route("Sitio " + i, "Descripción",
+                  //  "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
+       // }
 
         adapter = new DeleteSiteAdapter(v.getContext(), routeList);
 

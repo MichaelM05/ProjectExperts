@@ -59,7 +59,7 @@ public class RouteModifyAdapter extends RecyclerView.Adapter<RouteModifyAdapter.
         holder.txvDescriptionRoute.setText(route.getDescriptionRoute());
 
         try {
-            Glide.with(mContext).load(route.getImage()).into(holder.imcRoute);
+            Glide.with(mContext).load(route.getSites().get(0).getImagesSite().get(0)).into(holder.imcRoute);
 
         } catch (Exception e) {
             e.printStackTrace();

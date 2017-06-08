@@ -58,7 +58,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         holder.txvDescriptionRoute.setText(route.getDescriptionRoute());
 
         try {
-            Glide.with(mContext).load(route.getImage()).into(holder.imcRoute);
+            Glide.with(mContext).load(route.getSites().get(0).getImagesSite().get(0)).into(holder.imcRoute);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,6 +70,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
             public void onClick(View v) {
 
                 MapFragment mapFragment = new MapFragment();
+                mapFragment.route = route;
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, mapFragment, "mapFragment");
                 ft.addToBackStack("mapFragment");

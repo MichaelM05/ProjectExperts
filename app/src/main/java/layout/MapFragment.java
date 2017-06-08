@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.maps.android.PolyUtil;
+import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.Domain.VolleyS;
 import com.mjb.projectexperts.R;
 
@@ -44,6 +45,7 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     protected RequestQueue fRequestQueue;
     String points;
     MapView mMapView;
+    public Route route;
 
     public MapFragment() {
         // Required empty public constructor

@@ -1,7 +1,6 @@
 package com.mjb.projectexperts;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +58,7 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
         holder.txvNameRoute.setText(route.getNameRoute());
 
         try {
-            Glide.with(mContext).load(route.getImage()).into(holder.imcRoute);
+            Glide.with(mContext).load(route.getSites().get(0).getImagesSite().get(0)).into(holder.imcRoute);
 
         } catch (Exception e) {
             e.printStackTrace();
