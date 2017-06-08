@@ -31,7 +31,7 @@ public class VideoRouteFragment extends Fragment {
         mVideoView =(VideoView) v.findViewById(R.id.surface_view);
         MediaController mediaController= new MediaController(v.getContext());
         mediaController.setAnchorView(mVideoView);
-        Uri uri=Uri.parse("https://www.youtube.com/watch?v=cfmaN4DVMLA&t=32s");
+        Uri uri=Uri.parse("http://rutascr.esy.es/video/hero_video.mp4");
         mVideoView.setMediaController(mediaController);
         mVideoView.setVideoURI(uri);
         //mVideoView.setVideoPath("/mnt/sdcard/video.mp4");
