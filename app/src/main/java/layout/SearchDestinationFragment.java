@@ -22,9 +22,19 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
+
+import org.json.JSONObject;
+
+import java.util.HashMap;
 
 import static android.os.Build.VERSION_CODES.M;
 
@@ -38,23 +48,23 @@ public class SearchDestinationFragment extends Fragment
     String[] actividad = {"Cultural","Montaña","Ecológico","Recreativo"};
     String[] distancia = {"1 - 2 Km","2 - 4 Km","4 - 6 Km","6 - 8 Km","8 o más Km"};
     String[] precio = {"$0 - $5","$5 - $10","$10 - $20","$20 - $30","$30 o más"};
-    String[] partida = {"Mi ubicación","San José","Cartago","Alajuela"};
-
+    String[] partida = {"Mi ubicación","San José","Cartago","Limón"};
+    private boolean flag = false;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
-
     private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
     protected LocationManager locationManager;
     protected Context context;
     protected boolean gps_enabled, network_enabled;
     private LocationListener locationListener;
-    ProgressDialog progressDialog;
-    Location lastLocation;
-    FragmentTransaction ft;
-    MaterialBetterSpinner materialDesignSpinnerDistance;
-    MaterialBetterSpinner materialDesignSpinnerActivity;
-    MaterialBetterSpinner materialDesignSpinnerPrice;
-    MaterialBetterSpinner materialDesignSpinnerTT;
-    MaterialBetterSpinner materialDesignSpinnerOrigin;
+    private ProgressDialog progressDialog;
+    private Location lastLocation;
+    private FragmentTransaction ft;
+    private MaterialBetterSpinner materialDesignSpinnerDistance;
+    private MaterialBetterSpinner materialDesignSpinnerActivity;
+    private MaterialBetterSpinner materialDesignSpinnerPrice;
+    private MaterialBetterSpinner materialDesignSpinnerTT;
+    private MaterialBetterSpinner materialDesignSpinnerOrigin;
+    private String lat,leng;
 
     public SearchDestinationFragment() {
         // Required empty public constructor
@@ -141,19 +151,48 @@ public class SearchDestinationFragment extends Fragment
                 parameters[3] = materialDesignSpinnerTT.getText().toString();
                 parameters[4] = materialDesignSpinnerOrigin.getText().toString();
                 ((MenuActivity) getActivity()).parameters = parameters;
-                RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
-                ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
-                ft.addToBackStack("routesFoundFragment");
 
 
-                if(lastLocation == null){
-                    getLocation();
-                    progressDialog.show();
+                if(parameters[4].equals("Mi ubicación")) {
+                    if (lastLocation == null) {
+                        getLocation();
+                        progressDialog.show();
+                    } else {
+                        if (searchRoutes(v.getContext(),lastLocation.getLatitude()+
+                                "",lastLocation.getLongitude()+"")){
+                            RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+                            ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+                            ft.addToBackStack("routesFoundFragment");
+                            ft.commit();
+                        }else{
+                            Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }else{
-                    Toast.makeText(getActivity(), "Latitude:" + lastLocation.getLatitude() + ", Longitude:"
-                            + lastLocation.getLongitude(), Toast.LENGTH_LONG).show();
-                    ft.commit();
+                    switch (parameters[4]){
+                        case "Cartago":
+                            lat = "9.862251741694937";
+                            leng = "-83.91546249389648";
+                            break;
+                        case "San José":
+                            lat = "9.915826049729528";
+                            leng = "-84.06944274902344";
+                            break;
+                        case "Limón":
+                            lat = "9.98805634887536";
+                            leng = "-83.04376602172852";
+                            break;
+                    }
+                    if (searchRoutes(v.getContext(),lat,leng)){
+                        RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+                        ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+                        ft.addToBackStack("routesFoundFragment");
+                        ft.commit();
+                    }else{
+                        Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
+                    }
                 }
 
 
@@ -260,9 +299,16 @@ public class SearchDestinationFragment extends Fragment
                         ((MenuActivity)getActivity()).lastLocation = location;
                         lastLocation = location;
                         progressDialog.dismiss();
-                        Toast.makeText(getActivity(), "Latitude:" + lastLocation.getLatitude() + ", Longitude:"
-                                + lastLocation.getLongitude(), Toast.LENGTH_LONG).show();
-                        ft.commit();
+                        if (searchRoutes(getActivity(),lastLocation.getLatitude()+
+                                "",lastLocation.getLongitude()+"")){
+                            RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+                            ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+                            ft.addToBackStack("routesFoundFragment");
+                            ft.commit();
+                        }else{
+                            Toast.makeText(getActivity(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -305,6 +351,40 @@ public class SearchDestinationFragment extends Fragment
 
                     }
                 }
+            }
+
+            private boolean searchRoutes(final Context context,String lat,String leng){
+
+                RequestQueue queue = Volley.newRequestQueue(context);
+                final String URL = "http://rutascr.esy.es/WebServices/routes";
+                String[] parameters = ((MenuActivity) getActivity()).parameters;
+                HashMap<String, String> params = new HashMap<String, String>();
+                params.put("activity",parameters[1]);
+                params.put("price",parameters[2]);
+                params.put("duration",parameters[3]);
+                params.put("distance",parameters[0]);
+                params.put("initPoint",lat+","+leng);
+
+                JsonObjectRequest request_json = new JsonObjectRequest(URL, new JSONObject(params),
+                        new Response.Listener<JSONObject>() {
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+                                flag = true;
+                                System.out.println(response);
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        VolleyLog.e("Error: ", error.getMessage());
+                        flag = false;
+                    }
+                });
+
+                queue.add(request_json);
+
+                return flag;
+
             }
 }
 
