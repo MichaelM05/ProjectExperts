@@ -30,6 +30,7 @@ public class MenuActivity extends AppCompatActivity
     public Location lastLocation;
     public String[] parameters;
     public ArrayList<Route> routeList;
+    public ArrayList<Route> preRouteList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
