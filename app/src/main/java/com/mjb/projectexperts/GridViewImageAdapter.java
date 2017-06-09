@@ -20,12 +20,9 @@ public class GridViewImageAdapter extends BaseAdapter {
     private ArrayList<String> listPhoto = new ArrayList<String>();
 
     /** Constructor de clase */
-    public GridViewImageAdapter(Context c){
+    public GridViewImageAdapter(Context c,ArrayList<String> images){
         mContext = c;
-        //se cargan las miniaturas
-        for(int i = 0; i < 9; i++){
-            listPhoto.add("http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg");
-        }
+        listPhoto = images;
     }
 
     @Override

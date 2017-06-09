@@ -29,7 +29,6 @@ public class RouteModifyAdapter extends RecyclerView.Adapter<RouteModifyAdapter.
         public MyViewHolder(View view) {
             super(view);
             txvNameRoute = (TextView) view.findViewById(R.id.txvNameRoute);
-            txvDescriptionRoute = (TextView) view.findViewById(R.id.txvDescriptionRoute);
             imcRoute = (ImageView) view.findViewById(R.id.imc_route);
             //btnSearch = (Button) view.findViewById(R.id.btn_view);
         }

@@ -39,7 +39,7 @@
 
 
 
-            <TextView
+            <!--<TextView
                 android:id="@+id/txvDescriptionRoute"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
                 android:textSize="@dimen/songs_count" />
 
 
-            <!--<Button
+            <!-<Button
                  android:id="@+id/btn_view"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"
