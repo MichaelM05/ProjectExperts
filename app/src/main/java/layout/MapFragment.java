@@ -178,9 +178,9 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
 
     @Override
     public boolean onMarkerClick(Marker marker) {
-        Toast.makeText(getActivity(), "Latitude:" + marker.getPosition().latitude + ", Longitude:"
-                + marker.getPosition().longitude, Toast.LENGTH_LONG).show();
         DetailSiteFragment detailSiteFragment = new DetailSiteFragment();
+        detailSiteFragment.lat = marker.getPosition().latitude+"";
+        detailSiteFragment.leng =  marker.getPosition().longitude+"";
         FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame, detailSiteFragment, "detailSiteFragment");
         ft.addToBackStack("detailSiteFragment");

@@ -18,6 +18,7 @@ import com.mjb.projectexperts.R;
 public class VideoRouteFragment extends Fragment {
 
     private VideoView mVideoView;
+    public String url;
     public VideoRouteFragment() {
         // Required empty public constructor
     }
@@ -31,7 +32,7 @@ public class VideoRouteFragment extends Fragment {
         mVideoView =(VideoView) v.findViewById(R.id.surface_view);
         MediaController mediaController= new MediaController(v.getContext());
         mediaController.setAnchorView(mVideoView);
-        Uri uri=Uri.parse("http://rutascr.esy.es/video/hero_video.mp4");
+        Uri uri=Uri.parse(url);
         mVideoView.setMediaController(mediaController);
         mVideoView.setVideoURI(uri);
         mVideoView.requestFocus();

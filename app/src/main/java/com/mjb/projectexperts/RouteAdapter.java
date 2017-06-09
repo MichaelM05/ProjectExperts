@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.mjb.projectexperts.Domain.Route;
 
 import java.util.ArrayList;
@@ -28,7 +27,6 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         public MyViewHolder(View view) {
             super(view);
             txvNameRoute = (TextView) view.findViewById(R.id.txvNameRoute);
-            txvDescriptionRoute = (TextView) view.findViewById(R.id.txvDescriptionRoute);
             imcRoute = (ImageView) view.findViewById(R.id.imc_route);
             //btnSearch = (Button) view.findViewById(R.id.btn_view);
         }
@@ -55,10 +53,9 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     public void onBindViewHolder(final RouteAdapter.MyViewHolder holder, int position) {
         final Route route = routeList.get(position);
         holder.txvNameRoute.setText(route.getNameRoute());
-        holder.txvDescriptionRoute.setText(route.getDescriptionRoute());
 
         try {
-            Glide.with(mContext).load("http://rutascr.esy.es/Images/mapShowRoutes.png");
+            //Glide.with(mContext).load("http://rutascr.esy.es/Images/mapShowRoutes.png");
             //Glide.with(mContext).load(R.drawable.map).centerCrop();
 
         } catch (Exception e) {
