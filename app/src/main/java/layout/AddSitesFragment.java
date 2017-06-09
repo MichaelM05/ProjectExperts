@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.mjb.projectexperts.AddSiteAdapter;
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
 import java.util.ArrayList;
@@ -40,12 +41,9 @@ public class AddSitesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_add_sites, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        routeList = new ArrayList<>();
-
-        //for(int i = 0; i < 4; i++){
-            //routeList.add(new Route("Sitio " + i, "Descripción",
-              //      "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
-       // }
+        if(routeList == null){
+            routeList = ((MenuActivity)getActivity()).routeList;
+        }
 
         adapter = new AddSiteAdapter(this, routeList);
 
