@@ -109,7 +109,8 @@ public class RegistryFragment extends Fragment {
                 @Override
                 public void onResponse(JSONObject response) {
 
-                    flag = true;
+                    flag = createSuccess(response);
+
                 }
             }, new Response.ErrorListener() {
             @Override
@@ -129,6 +130,21 @@ public class RegistryFragment extends Fragment {
         return flag;
 
     }
+
+    public boolean createSuccess(JSONObject response){
+
+        try{
+            if(response.getString("status").toString().equalsIgnoreCase("success")){
+                return true;
+            }else{
+                return false;
+            }
+
+        }catch (Exception e){}
+
+        return false;
+    }
+
 
     private boolean validateFields(User user){
 
