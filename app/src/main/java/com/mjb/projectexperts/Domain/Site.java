@@ -9,10 +9,9 @@ import java.util.ArrayList;
 public class Site {
 
     private int idSite,priceSite;
-    private String nameSite,descriptionSite,latSite,lengSite,typeActivity,pathVideo;
+    private String nameSite,descriptionSite,latSite,lengSite,
+            typeActivity,pathVideo;
     private ArrayList<String> imagesSite;
-
-
 
     private ArrayList<String> videos;
 
@@ -24,6 +23,7 @@ public class Site {
         this.nameSite = "";
         this.priceSite = 0;
         this.typeActivity = "";
+        this.imagesSite = new ArrayList<>();
     }
 
     public Site(String descriptionSite, int idSite, ArrayList<String> imagesSite, String latSite, String lengSite, String nameSite, int priceSite, String typeActivity) {

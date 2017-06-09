@@ -5,8 +5,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
-import android.graphics.Rect;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -16,9 +14,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,6 +76,7 @@ public class CreateRouteFragment extends Fragment {
     public AddSitesFragment ads;
     private String lat,leng;
     private TextView txtNameRoute;
+    public ArrayList<Site> sitios;
 
     public CreateRouteFragment() {
         // Required empty public constructor
@@ -150,7 +147,7 @@ public class CreateRouteFragment extends Fragment {
         progressDialog.setCancelable(false);
 
 
-
+        sitios = new ArrayList<>();
 
         Button btnAccept = (Button)v.findViewById(R.id.btn_accept_search);
         btnAccept.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +171,7 @@ public class CreateRouteFragment extends Fragment {
                         progressDialog.show();
                         progressDialog.setTitle("Buscando su ubicación");
                     } else {
-                        searchRoutes(getActivity(),lastLocation.getLatitude()+
+                        searchSites(getActivity(),lastLocation.getLatitude()+
                                 "",lastLocation.getLongitude()+"");
                     }
                 }else{
@@ -192,7 +189,7 @@ public class CreateRouteFragment extends Fragment {
                             leng = "-83.04376602172852";
                             break;
                     }
-                    searchRoutes(v.getContext(),lat,leng);
+                    searchSites(v.getContext(),lat,leng);
                 }
 
 
@@ -303,7 +300,7 @@ public class CreateRouteFragment extends Fragment {
                 ((MenuActivity)getActivity()).lastLocation = location;
                 lastLocation = location;
                 progressDialog.dismiss();
-                searchRoutes(getActivity(),lastLocation.getLatitude()+
+                searchSites(getActivity(),lastLocation.getLatitude()+
                         "",lastLocation.getLongitude()+"");
 
 
@@ -351,7 +348,7 @@ public class CreateRouteFragment extends Fragment {
         }
     }
 
-    private void searchRoutes(final Context context,final String lat,final String leng){
+    private void searchSites(final Context context,final String lat,final String leng){
 
         RequestQueue queue = Volley.newRequestQueue(context);
         final String URL = "http://rutascr.esy.es/WebServices/searchtouristicplaces";
@@ -362,14 +359,14 @@ public class CreateRouteFragment extends Fragment {
         params.put("duration",parameters[3]);
         params.put("distance",parameters[0]);
         params.put("initPoint",lat+","+leng);
-        progressDialog.setTitle("Buscando rutas");
+        progressDialog.setTitle("Buscando sitios");
         progressDialog.show();
 
         JsonArrayRequest request_json = new JsonArrayRequest(URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
-                        if(parseRoutes(response)) {
+                        if(parseSites(response)) {
                             progressDialog.dismiss();
 
                             AddSitesFragment addSitesFragment = new AddSitesFragment();
@@ -399,17 +396,11 @@ public class CreateRouteFragment extends Fragment {
         queue.add(request_json);
     }
 
-    private boolean parseRoutes(JSONArray response){
-        ArrayList<Route> routes = new ArrayList<>();
+    private boolean parseSites(JSONArray response){
         try {
             for (int i = 0; i < response.length(); i++) {
-                JSONArray routesArray = response.getJSONArray(i);
-                Route route = new Route();
-                route.setNameRoute("Ruta "+(i+1));
-                ArrayList<Site> sitios = new ArrayList<>();
-                for (int j = 0; j < routesArray.length(); j++) {
+                JSONObject jsonSite= response.getJSONObject(i);
                     Site sitio = new Site();
-                    JSONObject jsonSite = routesArray.getJSONObject(j);
                     sitio.setIdSite(Integer.parseInt(jsonSite.getString("idTouristicPlace")));
                     sitio.setNameSite(jsonSite.getString("nameTouristicPlace"));
                     sitio.setDescriptionSite(jsonSite.getString("descriptionTouristicPlace"));
@@ -417,14 +408,12 @@ public class CreateRouteFragment extends Fragment {
                     sitio.setLengSite(jsonSite.getString("length"));
                     sitio.setPriceSite((jsonSite.getString("price").equals(""))?0:Integer.parseInt(jsonSite.getString("price")));
                     sitio.setTypeActivity(jsonSite.getString("typeActivity"));
-
                     ArrayList<String> images = new ArrayList<>();
                     JSONArray imagesArray = jsonSite.getJSONArray("images");
                     for(int k = 0; k < imagesArray.length(); k++){
                         images.add(imagesArray.getString(k));
                     }
                     sitio.setImagesSite(images);
-
                     ArrayList<String> video = new ArrayList<>();
                     JSONArray videosArray = jsonSite.getJSONArray("videos");
                     for(int z = 0; z < videosArray.length(); z++){
@@ -432,14 +421,11 @@ public class CreateRouteFragment extends Fragment {
                     }
                     sitio.setVideos(video);
                     sitios.add(sitio);
-                }
-                route.setSites(sitios);
-                routes.add(route);
             }
         }catch (JSONException ex){
             return false;
         }
-        ((MenuActivity) getActivity()).routeList = routes;
+        ((MenuActivity) getActivity()).sites = sitios;
         return true;
     }
 

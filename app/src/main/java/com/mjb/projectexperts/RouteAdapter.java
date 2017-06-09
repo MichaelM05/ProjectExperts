@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.mjb.projectexperts.Domain.Route;
 
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
     private Fragment mContext;
     private ArrayList<Route> routeList;
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView txvNameRoute, txvDescriptionRoute;
+        public TextView txvNameRoute;
         public ImageView imcRoute;
         //public Button btnSearch;
 
@@ -55,7 +56,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         holder.txvNameRoute.setText(route.getNameRoute());
 
         try {
-            //Glide.with(mContext).load("http://rutascr.esy.es/Images/mapShowRoutes.png");
+            Glide.with(mContext).load("http://rutascr.esy.es/Images/mapShowRoutes.png");
             //Glide.with(mContext).load(R.drawable.map).centerCrop();
 
         } catch (Exception e) {

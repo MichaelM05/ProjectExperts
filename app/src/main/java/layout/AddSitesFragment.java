@@ -27,9 +27,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.mjb.projectexperts.AddSiteAdapter;
+
 import com.mjb.projectexperts.Domain.PredesignedRoute;
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.Domain.User;
+
+import com.mjb.projectexperts.Domain.Site;
+
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
@@ -47,8 +51,9 @@ public class AddSitesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private AddSiteAdapter adapter;
-    private ArrayList<Route> routeList;
     private boolean flag;
+    private ArrayList<Site> siteList;
+
     public AddSitesFragment() {
         // Required empty public constructor
     }
@@ -61,11 +66,12 @@ public class AddSitesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_add_sites, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        if(routeList == null){
-            routeList = ((MenuActivity)getActivity()).routeList;
+        siteList = new ArrayList<>();
+        if(siteList == null){
+            siteList = ((MenuActivity)getActivity()).sites;
         }
 
-        adapter = new AddSiteAdapter(this, routeList);
+        adapter = new AddSiteAdapter(this, siteList);
 
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
@@ -94,7 +100,6 @@ public class AddSitesFragment extends Fragment {
         });
 
 
-
         return v;
     }
 
@@ -106,10 +111,10 @@ public class AddSitesFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(context);
         final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes";
 
-        ArrayList<Route> sites = ((MenuActivity) getActivity()).sites;
+        ArrayList<Site> sites = ((MenuActivity) getActivity()).sites;
         ArrayList<Integer> idSites = new ArrayList<>();
         for (int i = 0; i < sites.size(); i++){
-            idSites.add(sites.get(i).getSites().get(i).getIdSite());
+            idSites.add(sites.get(i).getIdSite());
         }
         int idUser = Integer.parseInt(((MenuActivity) getActivity()).user.getIdUser());
         String nameRoute = ((MenuActivity) getActivity()).parameters[5];

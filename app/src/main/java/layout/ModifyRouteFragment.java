@@ -60,12 +60,12 @@ public class ModifyRouteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_modify_route, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
+        routeList = new ArrayList<>();
         if(routeList == null){
             routeList = ((MenuActivity)getActivity()).routeList;
         }
 
         adapter = new DeleteSiteAdapter(v.getContext(), routeList);
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
