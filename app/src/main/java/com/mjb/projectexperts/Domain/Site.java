@@ -9,10 +9,17 @@ import java.util.ArrayList;
 public class Site {
 
     private int idSite,priceSite;
-    private String nameSite,descriptionSite,latSite,lengSite,typeActivity;
+    private String nameSite,descriptionSite,latSite,lengSite,typeActivity,pathVideo;
     private ArrayList<String> imagesSite;
 
     public Site() {
+        this.descriptionSite = "";
+        this.idSite = 0;
+        this.latSite = "";
+        this.lengSite = "";
+        this.nameSite = "";
+        this.priceSite = 0;
+        this.typeActivity = "";
     }
 
     public Site(String descriptionSite, int idSite, ArrayList<String> imagesSite, String latSite, String lengSite, String nameSite, int priceSite, String typeActivity) {
@@ -88,5 +95,13 @@ public class Site {
 
     public void setTypeActivity(String typeActivity) {
         this.typeActivity = typeActivity;
+    }
+
+    public String getPathVideo() {
+        return pathVideo;
+    }
+
+    public void setPathVideo(String pathVideo) {
+        this.pathVideo = pathVideo;
     }
 }

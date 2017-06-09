@@ -22,18 +22,25 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
+import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 import com.weiwangcn.betterspinner.library.material.MaterialBetterSpinner;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import static android.os.Build.VERSION_CODES.M;
@@ -132,7 +139,7 @@ public class SearchDestinationFragment extends Fragment
 
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage("Espere....");
-        progressDialog.setTitle("Buscando su ubicación");
+
         progressDialog.setCancelable(false);
 
 
@@ -157,17 +164,10 @@ public class SearchDestinationFragment extends Fragment
                     if (lastLocation == null) {
                         getLocation();
                         progressDialog.show();
+                        progressDialog.setTitle("Buscando su ubicación");
                     } else {
-                        if (searchRoutes(v.getContext(),lastLocation.getLatitude()+
-                                "",lastLocation.getLongitude()+"")){
-                            RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
-                            ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
-                            ft.addToBackStack("routesFoundFragment");
-                            ft.commit();
-                        }else{
-                            Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
-                        }
+                        searchRoutes(getActivity(),lastLocation.getLatitude()+
+                                "",lastLocation.getLongitude()+"");
                     }
                 }else{
                     switch (parameters[4]){
@@ -184,15 +184,7 @@ public class SearchDestinationFragment extends Fragment
                             leng = "-83.04376602172852";
                             break;
                     }
-                    if (searchRoutes(v.getContext(),lat,leng)){
-                        RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
-                        ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
-                        ft.addToBackStack("routesFoundFragment");
-                        ft.commit();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
-                    }
+                    searchRoutes(v.getContext(),lat,leng);
                 }
 
 
@@ -299,16 +291,10 @@ public class SearchDestinationFragment extends Fragment
                         ((MenuActivity)getActivity()).lastLocation = location;
                         lastLocation = location;
                         progressDialog.dismiss();
-                        if (searchRoutes(getActivity(),lastLocation.getLatitude()+
-                                "",lastLocation.getLongitude()+"")){
-                            RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
-                            ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
-                            ft.addToBackStack("routesFoundFragment");
-                            ft.commit();
-                        }else{
-                            Toast.makeText(getActivity(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
-                        }
+                        searchRoutes(getActivity(),lastLocation.getLatitude()+
+                                "",lastLocation.getLongitude()+"");
+
+
                     }
 
                     @Override
@@ -353,38 +339,81 @@ public class SearchDestinationFragment extends Fragment
                 }
             }
 
-            private boolean searchRoutes(final Context context,String lat,String leng){
+            private void searchRoutes(final Context context,final String lat,final String leng){
 
                 RequestQueue queue = Volley.newRequestQueue(context);
                 final String URL = "http://rutascr.esy.es/WebServices/routes";
-                String[] parameters = ((MenuActivity) getActivity()).parameters;
+                final String[] parameters = ((MenuActivity) getActivity()).parameters;
                 HashMap<String, String> params = new HashMap<String, String>();
                 params.put("activity",parameters[1]);
                 params.put("price",parameters[2]);
                 params.put("duration",parameters[3]);
                 params.put("distance",parameters[0]);
                 params.put("initPoint",lat+","+leng);
+                progressDialog.setTitle("Buscando rutas");
+                progressDialog.show();
 
-                JsonObjectRequest request_json = new JsonObjectRequest(URL, new JSONObject(params),
-                        new Response.Listener<JSONObject>() {
+                JsonArrayRequest request_json = new JsonArrayRequest(URL, new JSONObject(params),
+                        new Response.Listener<JSONArray>() {
                             @Override
-                            public void onResponse(JSONObject response) {
-
-                                flag = true;
-                                System.out.println(response);
+                            public void onResponse(JSONArray response) {
+                                if(parseRoutes(response)) {
+                                    progressDialog.dismiss();
+                                    RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+                                    ft = getActivity().getSupportFragmentManager().beginTransaction();
+                                    ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
+                                    ft.addToBackStack("routesFoundFragment");
+                                    ft.commit();
+                                }else{
+                                    progressDialog.dismiss();
+                                    Toast.makeText(getActivity(), "Hubo un error, intente de nuevo.", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        VolleyLog.e("Error: ", error.getMessage());
-                        flag = false;
+                        VolleyLog.e("Error: ", error.getMessage()+" !");
+                        Toast.makeText(getActivity(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+
                     }
                 });
-
+                int socketTimeout = 15000; // 30 seconds. You can change it
+                RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                        DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                        DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+                request_json.setRetryPolicy(policy);
                 queue.add(request_json);
+            }
 
-                return flag;
-
+            private boolean parseRoutes(JSONArray response){
+                ArrayList<Route> routes = new ArrayList<>();
+                try {
+                    for (int i = 0; i < response.length(); i++) {
+                        JSONArray routesArray = response.getJSONArray(i);
+                        Route route = new Route();
+                        route.setNameRoute("Ruta "+(i+1));
+                        ArrayList<Site> sitios = new ArrayList<>();
+                        for (int j = 0; j < routesArray.length(); j++) {
+                            Site sitio = new Site();
+                            JSONObject jsonSite = routesArray.getJSONObject(j);
+                            sitio.setIdSite(Integer.parseInt(jsonSite.getString("idTouristicPlace")));
+                            sitio.setNameSite(jsonSite.getString("nameTouristicPlace"));
+                            sitio.setDescriptionSite(jsonSite.getString("descriptionTouristicPlace"));
+                            sitio.setLatSite(jsonSite.getString("latitude"));
+                            sitio.setLengSite(jsonSite.getString("length"));
+                            sitio.setPriceSite((jsonSite.getString("price").equals(""))?0:Integer.parseInt(jsonSite.getString("price")));
+                            sitio.setTypeActivity(jsonSite.getString("typeActivity"));
+                            sitios.add(sitio);
+                        }
+                        route.setSites(sitios);
+                        routes.add(route);
+                    }
+                }catch (JSONException ex){
+                    return false;
+                }
+                ((MenuActivity) getActivity()).routeList = routes;
+                return true;
             }
 }
 

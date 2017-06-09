@@ -11,6 +11,8 @@ public class Route {
     private ArrayList<Site> sites;
 
     public Route() {
+        this.nameRoute = "";
+        this.descriptionRoute = "";
     }
 
     public Route(String nameRoute,String descriptionRoute, ArrayList<Site> sites) {

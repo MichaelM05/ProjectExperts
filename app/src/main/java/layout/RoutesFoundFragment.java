@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 import com.mjb.projectexperts.RouteAdapter;
 
@@ -26,8 +27,8 @@ public class RoutesFoundFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private RouteAdapter adapter;
-    private ArrayList<Route> routeList;
-    public String lat,longt;
+    public ArrayList<Route> routeList;
+
 
     public RoutesFoundFragment() {
         // Required empty public constructor
@@ -40,13 +41,9 @@ public class RoutesFoundFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_routes_found, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
-
-        routeList = new ArrayList<>();
-
-       // for(int i = 0; i < 4; i++){
-           // routeList.add(new Route("Ruta " + i, "Descripción",
-                //    "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
-       // }
+        if(routeList == null){
+            routeList = ((MenuActivity)getActivity()).routeList;
+        }
 
         adapter = new RouteAdapter(this, routeList);
 
