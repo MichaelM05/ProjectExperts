@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.Domain.Site;
 
 import java.util.ArrayList;
 
@@ -24,7 +24,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
 
 
     private Fragment mContext;
-    private ArrayList<Route> routeList;
+    private ArrayList<Site> sites;
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txvNameRoute;
         public ImageView imcRoute;
@@ -39,9 +39,9 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
     }
 
 
-    public AddSiteAdapter(Fragment mContext, ArrayList<Route> phoneList) {
+    public AddSiteAdapter(Fragment mContext, ArrayList<Site> phoneList) {
         this.mContext = mContext;
-        this.routeList = phoneList;
+        this.sites = phoneList;
     }
 
 
@@ -57,11 +57,11 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
 
     @Override
     public void onBindViewHolder(final AddSiteAdapter.MyViewHolder holder, int position) {
-        final Route route = routeList.get(position);
-        holder.txvNameRoute.setText(route.getNameRoute());
+        final Site sitio = sites.get(position);
+        holder.txvNameRoute.setText(sitio.getNameSite());
 
         try {
-            Glide.with(mContext).load(route.getSites().get(0).getImagesSite().get(0)).into(holder.imcRoute);
+            Glide.with(mContext).load(sitio.getImagesSite().get(0)).into(holder.imcRoute);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
             public void onClick(View v) {
 
 
-                ((MenuActivity) mContext.getActivity()).sites.add(route);
+                ((MenuActivity) mContext.getActivity()).sites.add(sitio);
 
 
                 ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
@@ -91,7 +91,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
 
     @Override
     public int getItemCount() {
-        return routeList.size();
+        return sites.size();
     }
 
 

@@ -1,7 +1,6 @@
 package layout;
 
 
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -64,7 +63,7 @@ public class MainFragment extends Fragment {
 
         ArrayList<Route> preRoute = ((MenuActivity)getActivity()).preRouteList;
         if(preRoute == null){
-            searchRoutes(getContext(),this);
+            searchRoutes(getContext(),this,v);
         }else{
             routeList = preRoute;
             adapter = new RouteAdapter(this,routeList);
@@ -97,10 +96,10 @@ public class MainFragment extends Fragment {
         return v;
     }
 
-    private void searchRoutes(final Context context,final Fragment frag){
+    private void searchRoutes(final Context context,final Fragment frag,final View v){
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        final String URL = "http://rutascr.esy.es/WebServices/predisignedroutes";
+        final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes";
 
         JsonArrayRequest request_json = new JsonArrayRequest(URL,
                 new Response.Listener<JSONArray>() {
@@ -138,13 +137,14 @@ public class MainFragment extends Fragment {
         ArrayList<Route> routes = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
-                JSONArray routesArray = response.getJSONArray(i);
+                JSONObject json_route = response.getJSONObject(i);
                 Route route = new Route();
-                route.setNameRoute("Ruta "+(i+1));
+                route.setNameRoute(json_route.getString("routeName"));
                 ArrayList<Site> sitios = new ArrayList<>();
-                for (int j = 0; j < routesArray.length(); j++) {
+                JSONArray sitesArray = json_route.getJSONArray("places");
+                for (int j = 0; j < sitesArray.length(); j++) {
                     Site sitio = new Site();
-                    JSONObject jsonSite = routesArray.getJSONObject(j);
+                    JSONObject jsonSite = sitesArray.getJSONObject(j);
                     sitio.setIdSite(Integer.parseInt(jsonSite.getString("idTouristicPlace")));
                     sitio.setNameSite(jsonSite.getString("nameTouristicPlace"));
                     sitio.setDescriptionSite(jsonSite.getString("descriptionTouristicPlace"));
@@ -157,7 +157,9 @@ public class MainFragment extends Fragment {
                         sitio.getImagesSite().add(images.getString(k));
                     }
                     JSONArray videos = jsonSite.getJSONArray("videos");
-                    sitio.setPathVideo(videos.getString(0));
+                    if(videos.length() >0) {
+                        sitio.setPathVideo(videos.getString(0));
+                    }
                     sitios.add(sitio);
                 }
                 route.setSites(sitios);
@@ -167,6 +169,7 @@ public class MainFragment extends Fragment {
             return false;
         }
         ((MenuActivity) getActivity()).preRouteList = routes;
+        routeList = routes;
         return true;
     }
 

@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mjb.projectexperts.AddSiteAdapter;
-import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
@@ -28,7 +28,7 @@ public class AddSitesFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private AddSiteAdapter adapter;
-    private ArrayList<Route> routeList;
+    private ArrayList<Site> siteList;
     public AddSitesFragment() {
         // Required empty public constructor
     }
@@ -41,17 +41,18 @@ public class AddSitesFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_add_sites, container, false);
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
-        if(routeList == null){
-            routeList = ((MenuActivity)getActivity()).routeList;
+        if(siteList == null) {
+            siteList = ((MenuActivity) getActivity()).sites;
+
+            adapter = new AddSiteAdapter(this, siteList);
+
+            RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
+            recyclerView.setLayoutManager(mLayoutManager);
+            recyclerView.addItemDecoration(new AddSitesFragment.GridSpacingItemDecoration(2, dpToPx(10), true));
+            recyclerView.setItemAnimator(new DefaultItemAnimator());
+            recyclerView.setAdapter(adapter);
+
         }
-
-        adapter = new AddSiteAdapter(this, routeList);
-
-        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
-        recyclerView.setLayoutManager(mLayoutManager);
-        recyclerView.addItemDecoration(new AddSitesFragment.GridSpacingItemDecoration(2, dpToPx(10), true));
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
-        recyclerView.setAdapter(adapter);
         return v;
     }
 

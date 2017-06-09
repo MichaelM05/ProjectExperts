@@ -43,14 +43,7 @@ public class ModifyRouteFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
-
-       // for(int i = 0; i < 4; i++){
-           // routeList.add(new Route("Sitio " + i, "Descripción",
-                  //  "http://rentacarcostarica.com/portal/wp-content/uploads/2016/09/Prusia-Park-is-part-of-the-Iraz%C3%BA-National-Park.jpg"));
-       // }
-
         adapter = new DeleteSiteAdapter(v.getContext(), routeList);
-
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));

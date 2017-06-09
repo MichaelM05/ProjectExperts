@@ -72,6 +72,7 @@ public class SearchDestinationFragment extends Fragment
     private MaterialBetterSpinner materialDesignSpinnerTT;
     private MaterialBetterSpinner materialDesignSpinnerOrigin;
     private String lat,leng;
+    public ArrayList<Route> routeList;
 
     public SearchDestinationFragment() {
         // Required empty public constructor
@@ -360,6 +361,7 @@ public class SearchDestinationFragment extends Fragment
                                 if(parseRoutes(response)) {
                                     progressDialog.dismiss();
                                     RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+                                    routesFoundFragment.routeList = routeList;
                                     ft = getActivity().getSupportFragmentManager().beginTransaction();
                                     ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
                                     ft.addToBackStack("routesFoundFragment");
@@ -413,6 +415,7 @@ public class SearchDestinationFragment extends Fragment
                     return false;
                 }
                 ((MenuActivity) getActivity()).routeList = routes;
+                this.routeList = routes;
                 return true;
             }
 }

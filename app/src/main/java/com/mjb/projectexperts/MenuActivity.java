@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.Domain.User;
 
 import java.util.ArrayList;
@@ -31,12 +32,10 @@ public class MenuActivity extends AppCompatActivity
     public Location lastLocation;
     public String[] parameters;
     public ArrayList<Route> routeList;
-<<<<<<< HEAD
     public ArrayList<Route> preRouteList;
-=======
     public User user;
-    public ArrayList<Route> sites;
->>>>>>> e06dde4019cb7704917a3791d32da19bd0c1a3c6
+    public ArrayList<Site> sites;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,6 +119,7 @@ public class MenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_pre_route) {
 
             RoutesFoundFragment routesFoundFragment = new RoutesFoundFragment();
+            routesFoundFragment.routeList = preRouteList;
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.frame, routesFoundFragment, "routesFoundFragment");
             ft.addToBackStack("routesFoundFragment");

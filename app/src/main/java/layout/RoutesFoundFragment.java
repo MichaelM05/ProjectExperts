@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mjb.projectexperts.Domain.Route;
-import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 import com.mjb.projectexperts.RouteAdapter;
 
@@ -41,9 +40,6 @@ public class RoutesFoundFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_routes_found, container, false);
 
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
-        if(routeList == null){
-            routeList = ((MenuActivity)getActivity()).routeList;
-        }
 
         adapter = new RouteAdapter(this, routeList);
 
