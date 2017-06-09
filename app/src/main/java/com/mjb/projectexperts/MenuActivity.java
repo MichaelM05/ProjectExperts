@@ -32,6 +32,7 @@ public class MenuActivity extends AppCompatActivity
     public String[] parameters;
     public ArrayList<Route> routeList;
     public User user;
+    public ArrayList<Route> sites;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

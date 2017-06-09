@@ -72,6 +72,10 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
             @Override
             public void onClick(View v) {
 
+
+                ((MenuActivity) mContext.getActivity()).sites.add(route);
+
+
                 ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");

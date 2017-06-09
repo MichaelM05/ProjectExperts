@@ -354,7 +354,7 @@ public class CreateRouteFragment extends Fragment {
     private void searchRoutes(final Context context,final String lat,final String leng){
 
         RequestQueue queue = Volley.newRequestQueue(context);
-        final String URL = "http://rutascr.esy.es/WebServices/routes";
+        final String URL = "http://rutascr.esy.es/WebServices/searchtouristicplaces";
         final String[] parameters = ((MenuActivity) getActivity()).parameters;
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("activity",parameters[1]);
@@ -416,6 +416,20 @@ public class CreateRouteFragment extends Fragment {
                     sitio.setLengSite(jsonSite.getString("length"));
                     sitio.setPriceSite((jsonSite.getString("price").equals(""))?0:Integer.parseInt(jsonSite.getString("price")));
                     sitio.setTypeActivity(jsonSite.getString("typeActivity"));
+
+                    ArrayList<String> images = new ArrayList<>();
+                    JSONArray imagesArray = jsonSite.getJSONArray("images");
+                    for(int k = 0; k < imagesArray.length(); k++){
+                        images.add(imagesArray.getString(k));
+                    }
+                    sitio.setImagesSite(images);
+
+                    ArrayList<String> video = new ArrayList<>();
+                    JSONArray videosArray = jsonSite.getJSONArray("videos");
+                    for(int z = 0; z < videosArray.length(); z++){
+                        video.add(videosArray.getString(z));
+                    }
+                    sitio.setVideos(video);
                     sitios.add(sitio);
                 }
                 route.setSites(sitios);
