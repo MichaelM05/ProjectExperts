@@ -12,6 +12,10 @@ public class Site {
     private String nameSite,descriptionSite,latSite,lengSite,typeActivity,pathVideo;
     private ArrayList<String> imagesSite;
 
+
+
+    private ArrayList<String> videos;
+
     public Site() {
         this.descriptionSite = "";
         this.idSite = 0;
@@ -39,6 +43,13 @@ public class Site {
 
     public void setDescriptionSite(String descriptionSite) {
         this.descriptionSite = descriptionSite;
+    }
+    public ArrayList<String> getVideos() {
+        return videos;
+    }
+
+    public void setVideos(ArrayList<String> videos) {
+        this.videos = videos;
     }
 
     public int getIdSite() {

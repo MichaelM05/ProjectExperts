@@ -20,6 +20,7 @@ import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -27,6 +28,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mjb.projectexperts.Domain.User;
 import com.mjb.projectexperts.Domain.VolleyS;
+import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
 import org.json.JSONArray;
@@ -49,6 +51,7 @@ public class LoginFragment extends Fragment {
     private VolleyS volley;
     protected RequestQueue fRequestQueue;
     private boolean flag;
+    private boolean flagUser = true;
 
     public LoginFragment() {
 
@@ -90,6 +93,8 @@ public class LoginFragment extends Fragment {
                         nav_Menu.findItem(R.id.nav_signout).setVisible(true);
                         nav_Menu.findItem(R.id.nav_welcome_client).setVisible(true);
                         ft.commit();
+                    }else if(!flagUser){
+                        Toast.makeText(v.getContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
                     }else{
                         Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
                     }
@@ -118,8 +123,11 @@ public class LoginFragment extends Fragment {
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-
-                        flag = true;
+                        if(isUser(response)){
+                            flag = true;
+                        }else{
+                            flagUser = false;
+                        }
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -129,10 +137,31 @@ public class LoginFragment extends Fragment {
             }
         });
 
+
+        int socketTimeout = 15000; // 30 seconds. You can change it
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request_json.setRetryPolicy(policy);
         queue.add(request_json);
 
         return flag;
 
+    }
+
+
+    public boolean isUser(JSONObject response){
+        try {
+            User user = new User(response);
+            if (user.getIdUser().length() > 0) {
+                ((MenuActivity) getActivity()).user = user;
+                flagUser = true;
+                return true;
+            } else {
+                return false;
+            }
+        }catch (Exception e){}
+        return false;
     }
 
 

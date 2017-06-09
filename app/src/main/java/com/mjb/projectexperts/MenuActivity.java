@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.Domain.User;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,12 @@ public class MenuActivity extends AppCompatActivity
     public Location lastLocation;
     public String[] parameters;
     public ArrayList<Route> routeList;
+<<<<<<< HEAD
     public ArrayList<Route> preRouteList;
+=======
+    public User user;
+    public ArrayList<Route> sites;
+>>>>>>> e06dde4019cb7704917a3791d32da19bd0c1a3c6
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
