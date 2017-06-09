@@ -371,6 +371,7 @@ public class CreateRouteFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         if(parseRoutes(response)) {
                             progressDialog.dismiss();
+
                             AddSitesFragment addSitesFragment = new AddSitesFragment();
                             FragmentTransaction ads = getActivity().getSupportFragmentManager().beginTransaction();
                             ads.replace(R.id.frame, addSitesFragment, "routesFoundFragment");

@@ -9,11 +9,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="layout.AddSitesFragment">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
+
+    <LinearLayout
+        android:id="@+id/area_sites_add"
+        android:layout_below="@+id/area_name_route"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clipToPadding="false"
-        android:scrollbars="vertical" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical" >
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipToPadding="false"
+            android:scrollbars="vertical"
+            android:layout_weight="10"/>
+
+
+
+        <Button
+            android:id="@+id/btn_create_route"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/create_new_52"
+            android:text="Crear ruta"
+            android:textColor="@android:color/white"
+            />
+
+    </LinearLayout>
+
+
+
 
 </RelativeLayout>
