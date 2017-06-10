@@ -56,7 +56,7 @@ public class RouteAdapter extends RecyclerView.Adapter<RouteAdapter.MyViewHolder
         holder.txvNameRoute.setText(route.getNameRoute());
 
         try {
-            Glide.with(mContext).load("http://rutascr.esy.es/Images/mapShowRoutes.png");
+            Glide.with(mContext.getContext()).load("http://rutascr.esy.es/Images/mapShowRoutes.png").into(holder.imcRoute);
             //Glide.with(mContext).load(R.drawable.map).centerCrop();
 
         } catch (Exception e) {

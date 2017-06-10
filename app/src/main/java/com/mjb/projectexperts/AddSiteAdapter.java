@@ -62,7 +62,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
 
         try {
             Glide.with(mContext).load(sitio.getImagesSite().get(0)).into(holder.imcRoute);
-
+            System.out.println(sitio.getImagesSite().get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }
