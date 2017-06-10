@@ -1,7 +1,6 @@
 package com.mjb.projectexperts;
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,6 @@ import com.bumptech.glide.Glide;
 import com.mjb.projectexperts.Domain.Site;
 
 import java.util.ArrayList;
-
-import layout.ModifyRouteFragment;
 
 /**
  * Created by mm on 03/05/2017.
@@ -63,7 +60,6 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
 
         try {
             Glide.with(mContext).load(sitio.getImagesSite().get(0)).into(holder.imcRoute);
-            System.out.println(sitio.getImagesSite().get(0));
         } catch (Exception e) {
             e.printStackTrace();
         }

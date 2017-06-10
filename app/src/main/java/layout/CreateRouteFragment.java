@@ -25,7 +25,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
@@ -33,7 +32,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
@@ -370,7 +368,7 @@ public class CreateRouteFragment extends Fragment {
         progressDialog.setTitle("Buscando sitios");
         progressDialog.show();
 
-        JsonArrayRequest request_json = new JsonArrayRequest(Request.Method.DELETE,URL, new JSONObject(params),
+        JsonArrayRequest request_json = new JsonArrayRequest(URL, new JSONObject(params),
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {

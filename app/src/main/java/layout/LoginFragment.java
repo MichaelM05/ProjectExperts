@@ -1,12 +1,12 @@
 package layout;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -15,28 +15,22 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mjb.projectexperts.Domain.User;
 import com.mjb.projectexperts.Domain.VolleyS;
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,9 +44,7 @@ public class LoginFragment extends Fragment {
     private TextView txtPassword;
     private VolleyS volley;
     protected RequestQueue fRequestQueue;
-    private boolean flag;
-    private boolean flagUser = true;
-
+    private ProgressDialog progressDialog;
     public LoginFragment() {
 
     }
@@ -68,7 +60,10 @@ public class LoginFragment extends Fragment {
         txtPassword = (TextView) v.findViewById(R.id.txtPassword);
 
 
-
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Espere....");
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Autenticando");
 
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,28 +72,8 @@ public class LoginFragment extends Fragment {
                 password = txtPassword.getText().toString();
 
                 if(validateFields(userName,password)){
-
-                    if(login(v.getContext(),userName,password)){
-
-                        Toast.makeText(v.getContext(), "¡Bienvenido " + userName + " !", Toast.LENGTH_SHORT).show();
-                        WelcomeFragment welcomeFragment = new WelcomeFragment();
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.frame, welcomeFragment, "welcomeFragment");
-                        ft.addToBackStack("welcomeFragment");
-                        NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
-                        Menu nav_Menu = navigationView.getMenu();
-                        nav_Menu.findItem(R.id.nav_login).setVisible(false);
-                        nav_Menu.findItem(R.id.nav_register).setVisible(false);
-                        nav_Menu.findItem(R.id.nav_routes_client).setVisible(true);
-                        nav_Menu.findItem(R.id.nav_signout).setVisible(true);
-                        nav_Menu.findItem(R.id.nav_welcome_client).setVisible(true);
-                        ft.commit();
-                    }else if(!flagUser){
-                        Toast.makeText(v.getContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
-                    }
-
+                    progressDialog.show();
+                    login(v.getContext(),userName,password,v);
                 }else{
                     Toast.makeText(v.getContext(), "Datos erroneos", Toast.LENGTH_SHORT).show();
                 }
@@ -110,7 +85,7 @@ public class LoginFragment extends Fragment {
 
 
 
-    private boolean login(final Context context, final String userName, final String password){
+    private void login(final Context context, final String userName, final String password,final View v){
 
         RequestQueue queue = Volley.newRequestQueue(context);
         final String URL = "http://rutascr.esy.es/WebServices/login";
@@ -124,16 +99,33 @@ public class LoginFragment extends Fragment {
                     @Override
                     public void onResponse(JSONObject response) {
                         if(isUser(response)){
-                            flag = true;
+                            Toast.makeText(v.getContext(), "¡Bienvenido " + userName + " !", Toast.LENGTH_SHORT).show();
+                            WelcomeFragment welcomeFragment = new WelcomeFragment();
+                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.frame, welcomeFragment, "welcomeFragment");
+                            ft.addToBackStack("welcomeFragment");
+                            NavigationView navigationView = (NavigationView) getActivity().findViewById(R.id.nav_view);
+                            Menu nav_Menu = navigationView.getMenu();
+                            nav_Menu.findItem(R.id.nav_login).setVisible(false);
+                            nav_Menu.findItem(R.id.nav_register).setVisible(false);
+                            nav_Menu.findItem(R.id.nav_routes_client).setVisible(true);
+                            nav_Menu.findItem(R.id.nav_signout).setVisible(true);
+                            nav_Menu.findItem(R.id.nav_welcome_client).setVisible(true);
+                            ft.commit();
+                            progressDialog.dismiss();
                         }else{
-                            flagUser = false;
+                            progressDialog.dismiss();
+                            Toast.makeText(v.getContext(), "Usuario no registrado", Toast.LENGTH_SHORT).show();
                         }
+
+
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                flag = false;
+                progressDialog.dismiss();
+                Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -145,7 +137,6 @@ public class LoginFragment extends Fragment {
         request_json.setRetryPolicy(policy);
         queue.add(request_json);
 
-        return flag;
 
     }
 
@@ -155,7 +146,6 @@ public class LoginFragment extends Fragment {
             User user = new User(response);
             if (user.getIdUser().length() > 0) {
                 ((MenuActivity) getActivity()).user = user;
-                flagUser = true;
                 return true;
             } else {
                 return false;
