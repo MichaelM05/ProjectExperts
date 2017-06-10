@@ -43,7 +43,7 @@
 
 
 
-    <LinearLayout
+   <!-- <LinearLayout
         android:id="@+id/area_name_route"
         android:layout_alignParentTop="true"
         android:layout_marginTop="0dp"
@@ -74,7 +74,7 @@
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
-    </LinearLayout>
+    </LinearLayout>-->
 
 
 

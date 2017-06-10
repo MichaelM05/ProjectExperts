@@ -76,13 +76,6 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
                 Toast.makeText(v.getContext(), "Sitio agregado", Toast.LENGTH_SHORT).show();
                 ((MenuActivity) mContext.getActivity()).sitesCreate.add(sitio);
 
-
-                /**ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
-                FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
-                ft.addToBackStack("modifyRouteFragment");
-                ft.commit();**/
-
             }
 
         });

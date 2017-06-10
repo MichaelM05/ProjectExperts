@@ -65,10 +65,10 @@ public class WelcomeFragment extends Fragment {
         btnModify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MyRoutesFragment myRoutesFragment = new MyRoutesFragment();
+                ModifyRouteFragment modifyRouteFragment = new ModifyRouteFragment();
                 FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, myRoutesFragment, "myRoutesFragment");
-                ft.addToBackStack("myRoutesFragment");
+                ft.replace(R.id.frame, modifyRouteFragment, "modifyRouteFragment");
+                ft.addToBackStack("modifyRouteFragment");
                 ft.commit();
             }
         });

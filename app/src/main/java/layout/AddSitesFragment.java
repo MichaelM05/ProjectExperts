@@ -1,6 +1,7 @@
 package layout;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
@@ -53,6 +55,7 @@ public class AddSitesFragment extends Fragment {
     private AddSiteAdapter adapter;
     private boolean flag;
     private ArrayList<Site> siteList;
+    private ProgressDialog progressDialog;
 
     public AddSitesFragment() {
         // Required empty public constructor
@@ -79,20 +82,41 @@ public class AddSitesFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
 
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Espere....");
+        progressDialog.setCancelable(false);
         Button btnAdd = (Button)v.findViewById(R.id.btn_create_route);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(createRoute(v.getContext())){
-                    Toast.makeText(v.getContext(),"Creación exitosa", Toast.LENGTH_LONG).show();
+                boolean flag = ((MenuActivity) getActivity()).isUpdate;
+                if(flag == false) {
+
+                    if (createRoute(v.getContext())) {
+                        Toast.makeText(v.getContext(), "Creación exitosa", Toast.LENGTH_LONG).show();
+                        ((MenuActivity) getActivity()).sitesCreate.clear();
+                        ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                        ft.addToBackStack("modifyRouteFragment");
+                        ft.commit();
+                    } else {
+                        Toast.makeText(v.getContext(), "Error al crear", Toast.LENGTH_LONG).show();
+                    }
+                }else if(updateRoute(v.getContext())){
+                    Toast.makeText(v.getContext(), "Actualización exitosa", Toast.LENGTH_LONG).show();
+                    ((MenuActivity) getActivity()).sitesCreate.clear();
+                    ((MenuActivity) getActivity()).isUpdate = false;
                     ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
                     FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
                     ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
                     ft.addToBackStack("modifyRouteFragment");
                     ft.commit();
+
                 }else{
-                    Toast.makeText(v.getContext(),"Error al crear", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(), "Error al actualizar", Toast.LENGTH_LONG).show();
                 }
 
 
@@ -123,12 +147,61 @@ public class AddSitesFragment extends Fragment {
         Gson gson = new Gson();
         String json = gson.toJson(predesignedRoute);
 
-        Toast.makeText(context, json, Toast.LENGTH_LONG).show();
+        JsonObjectRequest request_json = null;
+        try {
+            request_json = new JsonObjectRequest(URL, new JSONObject(json),
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            flag = createSuccess(response);
+
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    VolleyLog.e("Error: ", error.getMessage());
+                    flag = false;
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        int socketTimeout = 15000; // 30 seconds. You can change it
+        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
+        request_json.setRetryPolicy(policy);
+        queue.add(request_json);
+        ((MenuActivity) getActivity()).isUpdate = false;
+        return flag;
+
+    }
+
+
+    private boolean updateRoute(final Context context){
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes";
+
+        ArrayList<Site> sites = ((MenuActivity) getActivity()).sitesCreate;
+        ArrayList<Integer> idSites = new ArrayList<>();
+        for (int i = 0; i < sites.size(); i++){
+            idSites.add(sites.get(i).getIdSite());
+        }
+        int idUser = Integer.parseInt(((MenuActivity) getActivity()).user.getIdUser());
+        int idRouteUpdate = ((MenuActivity) getActivity()).idRouteUpdate;
+        String nameRoute = ((MenuActivity) getActivity()).nameUpdate;
+        PredesignedRoute predesignedRoute = new PredesignedRoute(nameRoute,idUser,idRouteUpdate,idSites);
+
+        Gson gson = new Gson();
+        String json = gson.toJson(predesignedRoute);
 
 
         JsonObjectRequest request_json = null;
         try {
-            request_json = new JsonObjectRequest(URL, new JSONObject(json),
+            request_json = new JsonObjectRequest(Request.Method.PUT,URL, new JSONObject(json),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

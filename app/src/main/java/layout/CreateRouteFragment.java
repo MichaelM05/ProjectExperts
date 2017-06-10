@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -123,6 +124,12 @@ public class CreateRouteFragment extends Fragment {
 
 
         txtNameRoute = (TextView) v.findViewById(R.id.txtNameRoute);
+
+        LinearLayout filed = (LinearLayout) v.findViewById(R.id.area_name_route);
+
+        if(((MenuActivity)getActivity()).isUpdate){
+            filed.setVisibility(View.INVISIBLE);
+        }
 
 
         String [] parameters = ((MenuActivity) getActivity()).parameters;
@@ -368,7 +375,6 @@ public class CreateRouteFragment extends Fragment {
                     public void onResponse(JSONArray response) {
                         if(parseSites(response)) {
                             progressDialog.dismiss();
-                            Toast.makeText(getActivity(),""+response, Toast.LENGTH_LONG).show();
                             AddSitesFragment addSitesFragment = new AddSitesFragment();
                             FragmentTransaction ads = getActivity().getSupportFragmentManager().beginTransaction();
                             ads.replace(R.id.frame, addSitesFragment, "routesFoundFragment");

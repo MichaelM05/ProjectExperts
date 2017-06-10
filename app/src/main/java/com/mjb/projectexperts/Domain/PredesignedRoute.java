@@ -13,10 +13,29 @@ public class PredesignedRoute {
     private int user;
     private ArrayList<Integer> places;
 
-    public PredesignedRoute(String routename, int user, ArrayList<Integer> places) {
+    private int idRoute;
+
+
+    public PredesignedRoute(String routename, int user, int idRoute, ArrayList<Integer> places) {
         this.routename = routename;
         this.user = user;
         this.places = places;
+        this.idRoute = idRoute;
+    }
+
+    public PredesignedRoute(String routename, int user,  ArrayList<Integer> places) {
+        this.routename = routename;
+        this.user = user;
+        this.places = places;
+    }
+
+
+    public int getIdRoute() {
+        return idRoute;
+    }
+
+    public void setIdRoute(int idRoute) {
+        this.idRoute = idRoute;
     }
 
 

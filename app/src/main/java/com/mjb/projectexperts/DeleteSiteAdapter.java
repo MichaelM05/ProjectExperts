@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.RetryPolicy;
@@ -21,14 +22,19 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.gson.JsonObject;
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.Domain.Site;
+import com.mjb.projectexperts.Domain.VolleyS;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import layout.CreateRouteFragment;
 import layout.MapFragment;
 import layout.ModifyRouteFragment;
 import layout.MyRoutesFragment;
@@ -42,16 +48,19 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
     private Fragment mContext;
     private ArrayList<Route> deleteSiteList;
     private boolean flag;
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView txvNameRoute;
         public ImageView imcRoute;
         public Button btnDelete;
+        public Button btnAddSite;
 
         public MyViewHolder(View view) {
             super(view);
             txvNameRoute = (TextView) view.findViewById(R.id.txvNameRoute);
             imcRoute = (ImageView) view.findViewById(R.id.imc_route);
             btnDelete = (Button) view.findViewById(R.id.btn_delete);
+            btnAddSite = (Button) view.findViewById(R.id.btn_add_sites_update);
         }
     }
 
@@ -59,6 +68,7 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
     public DeleteSiteAdapter(Fragment mContext, ArrayList<Route> siteList) {
         this.mContext = mContext;
         this.deleteSiteList = siteList;
+
     }
 
 
@@ -84,32 +94,45 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            ArrayList<Site> sites =  route.getSites();
-            Site site =  sites.get(position);
 
-              if(deleteSite(mContext,site.getIdSite())){
-                  Toast.makeText(v.getContext(), "Éxito al eliminar", Toast.LENGTH_SHORT).show();
-                  ((MenuActivity) mContext.getActivity()).preRouteList.remove(position);
-                  ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
-                  FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
-                  ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
-                  ft.addToBackStack("modifyRouteFragment");
-                  ft.commit();
+                if(deleteSite(mContext,route.getIdRoute())){
+                    Toast.makeText(v.getContext(), "Éxito al eliminar", Toast.LENGTH_SHORT).show();
+                    ((MenuActivity) mContext.getActivity()).preRouteList.remove(position);
+                    ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
+                    FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
+                    ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                    ft.addToBackStack("modifyRouteFragment");
+                    ft.commit();
 
-              }else{
-                  Toast.makeText(v.getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
-              }
+                }else{
+                    Toast.makeText(v.getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
+                }
 
 
 
             }
 
         });
+
+        holder.btnAddSite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ((MenuActivity) mContext.getActivity()).idRouteUpdate =  route.getIdRoute();
+                ((MenuActivity) mContext.getActivity()).isUpdate = true;
+                ((MenuActivity) mContext.getActivity()).nameUpdate = route.getNameRoute();
+                CreateRouteFragment createRouteFragment = new CreateRouteFragment();
+                FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, createRouteFragment, "createRouteFragment");
+                ft.commit();
+
+            }
+
+        });
+
 
 
     }
@@ -120,15 +143,12 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
     }
 
 
-
     private boolean deleteSite(final Fragment context, int idSite){
 
         RequestQueue queue = Volley.newRequestQueue(context.getActivity());
         final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes/"+idSite;
 
-
-
-        JsonObjectRequest request_json = new JsonObjectRequest(URL,
+        JsonObjectRequest request_json = new JsonObjectRequest(Request.Method.DELETE,URL,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {

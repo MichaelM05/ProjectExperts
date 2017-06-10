@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mjb.projectexperts.Domain.PredesignedRoute;
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.Domain.User;
@@ -36,6 +37,9 @@ public class MenuActivity extends AppCompatActivity
     public User user;
     public ArrayList<Site> sites;
     public ArrayList<Site> sitesCreate = new ArrayList<>();
+    public boolean isUpdate = false;
+    public int idRouteUpdate;
+    public String nameUpdate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
