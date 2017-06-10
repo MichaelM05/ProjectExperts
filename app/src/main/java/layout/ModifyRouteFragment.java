@@ -83,7 +83,7 @@ public class ModifyRouteFragment extends Fragment {
 
 
 
-        Button btnAdd = (Button)v.findViewById(R.id.btn_add_site);
+        /**Button btnAdd = (Button)v.findViewById(R.id.btn_add_site);
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +93,7 @@ public class ModifyRouteFragment extends Fragment {
                 ft.addToBackStack("addSitesFragment");
                 ft.commit();
             }
-        });
+        });*/
 
         return v;
     }

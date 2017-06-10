@@ -29,7 +29,7 @@
 
 
 
-        <Button
+        <!--<Button
             android:id="@+id/btn_add_site"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
             android:drawableLeft="@drawable/shopping_cart_loaded_filled_50"
             android:text="Agregar sitios"
             android:textColor="@android:color/white"
-            />
+            />-->
 
     </LinearLayout>
 
