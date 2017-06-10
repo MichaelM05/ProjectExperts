@@ -172,7 +172,6 @@ public class AddSitesFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request_json.setRetryPolicy(policy);
         queue.add(request_json);
-        ((MenuActivity) getActivity()).isUpdate = false;
         return flag;
 
     }
@@ -224,7 +223,6 @@ public class AddSitesFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request_json.setRetryPolicy(policy);
         queue.add(request_json);
-        ((MenuActivity) getActivity()).isUpdate = false;
         return flag;
 
     }

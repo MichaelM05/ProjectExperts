@@ -126,8 +126,8 @@ public class CreateRouteFragment extends Fragment {
         txtNameRoute = (TextView) v.findViewById(R.id.txtNameRoute);
 
         LinearLayout filed = (LinearLayout) v.findViewById(R.id.area_name_route);
-
-        if(((MenuActivity)getActivity()).isUpdate){
+        boolean flag = ((MenuActivity)getActivity()).isUpdate;
+        if(flag == true){
             filed.setVisibility(View.INVISIBLE);
         }
 
