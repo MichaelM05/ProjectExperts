@@ -128,8 +128,6 @@ public class AddSitesFragment extends Fragment {
     }
 
 
-
-
     private boolean createRoute(final Context context){
 
         RequestQueue queue = Volley.newRequestQueue(context);
@@ -226,7 +224,7 @@ public class AddSitesFragment extends Fragment {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request_json.setRetryPolicy(policy);
         queue.add(request_json);
-
+        ((MenuActivity) getActivity()).isUpdate = false;
         return flag;
 
     }
