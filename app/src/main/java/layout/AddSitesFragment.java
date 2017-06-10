@@ -67,9 +67,9 @@ public class AddSitesFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         siteList = new ArrayList<>();
-        if(siteList == null){
-            siteList = ((MenuActivity)getActivity()).sites;
-        }
+
+        siteList = ((MenuActivity)getActivity()).sites;
+
 
         adapter = new AddSiteAdapter(this, siteList);
 
@@ -111,7 +111,7 @@ public class AddSitesFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(context);
         final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes";
 
-        ArrayList<Site> sites = ((MenuActivity) getActivity()).sites;
+        ArrayList<Site> sites = ((MenuActivity) getActivity()).sitesCreate;
         ArrayList<Integer> idSites = new ArrayList<>();
         for (int i = 0; i < sites.size(); i++){
             idSites.add(sites.get(i).getIdSite());

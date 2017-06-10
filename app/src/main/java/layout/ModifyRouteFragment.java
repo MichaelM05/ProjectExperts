@@ -61,11 +61,16 @@ public class ModifyRouteFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
-        if(routeList == null){
-            routeList = ((MenuActivity)getActivity()).routeList;
-        }
 
-        adapter = new DeleteSiteAdapter(v.getContext(), routeList);
+        routeList = ((MenuActivity)getActivity()).preRouteList;
+
+        String  idUser = ((MenuActivity) getActivity()).user.getIdUser();
+        for(int i = 0; i < routeList.size(); i++){
+            if(!routeList.get(i).getIdUser().equalsIgnoreCase(idUser)){
+                routeList.remove(i);
+            }
+        }
+        adapter = new DeleteSiteAdapter(this,routeList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
@@ -92,119 +97,6 @@ public class ModifyRouteFragment extends Fragment {
 
         return v;
     }
-
-
-    private void searchRoutes(final Context context, final String lat, final String leng){
-
-        RequestQueue queue = Volley.newRequestQueue(context);
-        final String URL = "http://rutascr.esy.es/WebServices/searchtouristicplaces";
-        final String[] parameters = ((MenuActivity) getActivity()).parameters;
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("activity",parameters[1]);
-        params.put("price",parameters[2]);
-        params.put("duration",parameters[3]);
-        params.put("distance",parameters[0]);
-        params.put("initPoint",lat+","+leng);
-        progressDialog.setTitle("Buscando rutas");
-        progressDialog.show();
-
-        JsonArrayRequest request_json = new JsonArrayRequest(URL, new JSONObject(params),
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        if(parseRoutes(response)) {
-                            progressDialog.dismiss();
-
-                            ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
-                            FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                            ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
-                            ft.addToBackStack("modifyRouteFragment");
-                            ft.commit();
-
-                            /**AddSitesFragment addSitesFragment = new AddSitesFragment();
-                             FragmentTransaction ads = getActivity().getSupportFragmentManager().beginTransaction();
-                             ads.replace(R.id.frame, addSitesFragment, "routesFoundFragment");
-                             ads.addToBackStack("routesFoundFragment");
-                             ads.commit();*/
-                        }else{
-                            progressDialog.dismiss();
-                            Toast.makeText(getActivity(), "Hubo un error, intente de nuevo.", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage()+" !");
-                Toast.makeText(getActivity(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
-
-            }
-        });
-        int socketTimeout = 15000; // 30 seconds. You can change it
-        RetryPolicy policy = new DefaultRetryPolicy(socketTimeout,
-                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
-                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
-        request_json.setRetryPolicy(policy);
-        queue.add(request_json);
-    }
-
-    private boolean parseRoutes(JSONArray response){
-        ArrayList<Route> routes = new ArrayList<>();
-        try {
-            for (int i = 0; i < response.length(); i++) {
-                JSONArray routesArray = response.getJSONArray(i);
-                Route route = new Route();
-                route.setNameRoute("Ruta "+(i+1));
-                ArrayList<Site> sitios = new ArrayList<>();
-                for (int j = 0; j < routesArray.length(); j++) {
-                    Site sitio = new Site();
-                    JSONObject jsonSite = routesArray.getJSONObject(j);
-                    sitio.setIdSite(Integer.parseInt(jsonSite.getString("idTouristicPlace")));
-                    sitio.setNameSite(jsonSite.getString("nameTouristicPlace"));
-                    sitio.setDescriptionSite(jsonSite.getString("descriptionTouristicPlace"));
-                    sitio.setLatSite(jsonSite.getString("latitude"));
-                    sitio.setLengSite(jsonSite.getString("length"));
-                    sitio.setPriceSite((jsonSite.getString("price").equals(""))?0:Integer.parseInt(jsonSite.getString("price")));
-                    sitio.setTypeActivity(jsonSite.getString("typeActivity"));
-
-                    ArrayList<String> images = new ArrayList<>();
-                    JSONArray imagesArray = jsonSite.getJSONArray("images");
-                    for(int k = 0; k < imagesArray.length(); k++){
-                        images.add(imagesArray.getString(k));
-                    }
-                    sitio.setImagesSite(images);
-
-                    ArrayList<String> video = new ArrayList<>();
-                    JSONArray videosArray = jsonSite.getJSONArray("videos");
-                    for(int z = 0; z < videosArray.length(); z++){
-                        video.add(videosArray.getString(z));
-                    }
-                    sitio.setVideos(video);
-                    sitios.add(sitio);
-                }
-                route.setSites(sitios);
-                routes.add(route);
-            }
-        }catch (JSONException ex){
-            return false;
-        }
-        ((MenuActivity) getActivity()).routeList = routes;
-        return true;
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

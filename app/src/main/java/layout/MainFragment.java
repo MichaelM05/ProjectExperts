@@ -140,6 +140,7 @@ public class MainFragment extends Fragment {
                 JSONObject json_route = response.getJSONObject(i);
                 Route route = new Route();
                 route.setNameRoute(json_route.getString("routeName"));
+                route.setIdUser(json_route.getString("user"));
                 ArrayList<Site> sitios = new ArrayList<>();
                 JSONArray sitesArray = json_route.getJSONArray("places");
                 for (int j = 0; j < sitesArray.length(); j++) {

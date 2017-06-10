@@ -8,6 +8,7 @@ import java.util.ArrayList;
 public class Route {
 
     private String nameRoute,descriptionRoute;
+    private String idUser;
     private ArrayList<Site> sites;
 
     public Route() {
@@ -43,5 +44,13 @@ public class Route {
 
     public void setDescriptionRoute(String descriptionRoute) {
         this.descriptionRoute = descriptionRoute;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 }

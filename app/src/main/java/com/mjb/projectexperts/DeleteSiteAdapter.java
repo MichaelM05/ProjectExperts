@@ -1,6 +1,6 @@
 package com.mjb.projectexperts;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +39,7 @@ import layout.MyRoutesFragment;
 public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.MyViewHolder> {
 
 
-    private Context mContext;
+    private Fragment mContext;
     private ArrayList<Route> deleteSiteList;
     private boolean flag;
     public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -56,7 +56,7 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
     }
 
 
-    public DeleteSiteAdapter(Context mContext, ArrayList<Route> siteList) {
+    public DeleteSiteAdapter(Fragment mContext, ArrayList<Route> siteList) {
         this.mContext = mContext;
         this.deleteSiteList = siteList;
     }
@@ -93,8 +93,14 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
             Site site =  sites.get(position);
 
               if(deleteSite(mContext,site.getIdSite())){
-
                   Toast.makeText(v.getContext(), "Éxito al eliminar", Toast.LENGTH_SHORT).show();
+                  ((MenuActivity) mContext.getActivity()).preRouteList.remove(position);
+                  ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
+                  FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
+                  ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                  ft.addToBackStack("modifyRouteFragment");
+                  ft.commit();
+
               }else{
                   Toast.makeText(v.getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
               }
@@ -115,9 +121,9 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
 
 
 
-    private boolean deleteSite(final Context context, int idSite){
+    private boolean deleteSite(final Fragment context, int idSite){
 
-        RequestQueue queue = Volley.newRequestQueue(context);
+        RequestQueue queue = Volley.newRequestQueue(context.getActivity());
         final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes/"+idSite;
 
 
