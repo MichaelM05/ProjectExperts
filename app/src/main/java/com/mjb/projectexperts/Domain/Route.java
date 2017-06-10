@@ -8,6 +8,11 @@ import java.util.ArrayList;
 public class Route {
 
     private String nameRoute,descriptionRoute;
+    private String idUser;
+
+
+
+    private int idRoute;
     private ArrayList<Site> sites;
 
     public Route() {
@@ -43,5 +48,20 @@ public class Route {
 
     public void setDescriptionRoute(String descriptionRoute) {
         this.descriptionRoute = descriptionRoute;
+    }
+    public int getIdRoute() {
+        return idRoute;
+    }
+
+    public void setIdRoute(int idRoute) {
+        this.idRoute = idRoute;
+    }
+
+    public String getIdUser() {
+        return idUser;
+    }
+
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 }

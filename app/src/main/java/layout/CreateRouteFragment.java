@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -124,6 +125,12 @@ public class CreateRouteFragment extends Fragment {
 
 
         txtNameRoute = (TextView) v.findViewById(R.id.txtNameRoute);
+
+        LinearLayout filed = (LinearLayout) v.findViewById(R.id.area_name_route);
+        boolean flag = ((MenuActivity)getActivity()).isUpdate;
+        if(flag == true){
+            filed.setVisibility(View.INVISIBLE);
+        }
 
 
         String [] parameters = ((MenuActivity) getActivity()).parameters;
@@ -397,7 +404,6 @@ public class CreateRouteFragment extends Fragment {
     }
 
     private boolean parseSites(JSONArray response){
-        ArrayList<Route> routes = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
                 JSONObject jsonSite= response.getJSONObject(i);

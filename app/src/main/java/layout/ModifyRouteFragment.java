@@ -1,6 +1,8 @@
 package layout;
 
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -14,12 +16,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
 import com.mjb.projectexperts.DeleteSiteAdapter;
 import com.mjb.projectexperts.Domain.Route;
+import com.mjb.projectexperts.Domain.Site;
+import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +47,7 @@ public class ModifyRouteFragment extends Fragment {
     private RecyclerView recyclerView;
     private DeleteSiteAdapter adapter;
     private ArrayList<Route> routeList;
-
+    private ProgressDialog progressDialog;
     public ModifyRouteFragment() {
         // Required empty public constructor
     }
@@ -43,12 +61,27 @@ public class ModifyRouteFragment extends Fragment {
         recyclerView = (RecyclerView) v.findViewById(R.id.recycler_view);
 
         routeList = new ArrayList<>();
-        adapter = new DeleteSiteAdapter(v.getContext(), routeList);
+
+        routeList = ((MenuActivity)getActivity()).preRouteList;
+
+        String  idUser = ((MenuActivity) getActivity()).user.getIdUser();
+        for(int i = 0; i < routeList.size(); i++){
+            if(!routeList.get(i).getIdUser().equalsIgnoreCase(idUser)){
+                routeList.remove(i);
+            }
+        }
+        adapter = new DeleteSiteAdapter(this,routeList);
         RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(v.getContext(), 2);
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.addItemDecoration(new GridSpacingItemDecoration(2, dpToPx(10), true));
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Espere....");
+        progressDialog.setCancelable(false);
+
+
 
         Button btnAdd = (Button)v.findViewById(R.id.btn_add_site);
         btnAdd.setOnClickListener(new View.OnClickListener() {
@@ -64,7 +97,6 @@ public class ModifyRouteFragment extends Fragment {
 
         return v;
     }
-
 
     public class GridSpacingItemDecoration extends RecyclerView.ItemDecoration {
 

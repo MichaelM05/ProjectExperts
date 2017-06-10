@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mjb.projectexperts.Domain.Site;
@@ -72,15 +73,8 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
             @Override
             public void onClick(View v) {
 
-
-                ((MenuActivity) mContext.getActivity()).sites.add(sitio);
-
-
-                ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
-                FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
-                ft.addToBackStack("modifyRouteFragment");
-                ft.commit();
+                Toast.makeText(v.getContext(), "Sitio agregado", Toast.LENGTH_SHORT).show();
+                ((MenuActivity) mContext.getActivity()).sitesCreate.add(sitio);
 
             }
 
