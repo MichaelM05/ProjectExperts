@@ -13,14 +13,14 @@ public class PredesignedRoute {
     private int user;
     private ArrayList<Integer> places;
 
-    private int idRoute;
+    private int idPredesignedRoute;
 
 
     public PredesignedRoute(String routename, int user, int idRoute, ArrayList<Integer> places) {
         this.routename = routename;
         this.user = user;
         this.places = places;
-        this.idRoute = idRoute;
+        this.idPredesignedRoute = idRoute;
     }
 
     public PredesignedRoute(String routename, int user,  ArrayList<Integer> places) {
@@ -31,11 +31,11 @@ public class PredesignedRoute {
 
 
     public int getIdRoute() {
-        return idRoute;
+        return idPredesignedRoute;
     }
 
     public void setIdRoute(int idRoute) {
-        this.idRoute = idRoute;
+        this.idPredesignedRoute = idRoute;
     }
 
 

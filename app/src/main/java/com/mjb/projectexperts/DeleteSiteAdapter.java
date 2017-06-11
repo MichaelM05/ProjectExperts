@@ -1,7 +1,7 @@
 package com.mjb.projectexperts;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.Fragment;
-import android.content.Context;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -22,29 +22,21 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
-import com.google.gson.JsonObject;
 import com.mjb.projectexperts.Domain.Route;
-import com.mjb.projectexperts.Domain.Site;
-import com.mjb.projectexperts.Domain.VolleyS;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import layout.CreateRouteFragment;
-import layout.MapFragment;
 import layout.ModifyRouteFragment;
-import layout.MyRoutesFragment;
 
 /**
  * Created by mm on 03/05/2017.
  */
 public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.MyViewHolder> {
 
-
+    private ProgressDialog progressDialog;
     private Fragment mContext;
     private ArrayList<Route> deleteSiteList;
     private boolean flag;
@@ -68,6 +60,9 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
     public DeleteSiteAdapter(Fragment mContext, ArrayList<Route> siteList) {
         this.mContext = mContext;
         this.deleteSiteList = siteList;
+        progressDialog = new ProgressDialog(mContext.getActivity());
+        progressDialog.setMessage("Espere....");
+        progressDialog.setCancelable(false);
 
     }
 
@@ -97,22 +92,8 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
         holder.btnDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                if(deleteSite(mContext,route.getIdRoute())){
-                    Toast.makeText(v.getContext(), "Éxito al eliminar", Toast.LENGTH_SHORT).show();
-                    ((MenuActivity) mContext.getActivity()).preRouteList.remove(position);
-                    ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
-                    FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
-                    ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
-                    ft.addToBackStack("modifyRouteFragment");
-                    ft.commit();
-
-                }else{
-                    Toast.makeText(v.getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
-                }
-
-
-
+                progressDialog.show();
+                deleteSite(mContext,route.getIdRoute(),v,position);
             }
 
         });
@@ -124,6 +105,7 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
                 ((MenuActivity) mContext.getActivity()).idRouteUpdate =  route.getIdRoute();
                 ((MenuActivity) mContext.getActivity()).isUpdate = true;
                 ((MenuActivity) mContext.getActivity()).nameUpdate = route.getNameRoute();
+                ((MenuActivity) mContext.getActivity()).sitesCreate = route.getSites();
                 CreateRouteFragment createRouteFragment = new CreateRouteFragment();
                 FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
                 ft.replace(R.id.frame, createRouteFragment, "createRouteFragment");
@@ -143,7 +125,7 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
     }
 
 
-    private boolean deleteSite(final Fragment context, int idSite){
+    private void deleteSite(final Fragment context, int idSite, final  View v,final int position){
 
         RequestQueue queue = Volley.newRequestQueue(context.getActivity());
         final String URL = "http://rutascr.esy.es/WebServices/predesignedroutes/"+idSite;
@@ -154,13 +136,27 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
                     public void onResponse(JSONObject response) {
 
                         flag = deleteSuccess(response);
-
+                        if(flag){
+                            deleteSiteList.remove(position);
+                            notifyItemRemoved(position);
+                            notifyItemRangeChanged(position, deleteSiteList.size());
+                            Toast.makeText(v.getContext(), "Éxito al eliminar", Toast.LENGTH_SHORT).show();
+                            ModifyRouteFragment modifyRoutesFragment = new ModifyRouteFragment();
+                            FragmentTransaction ft = mContext.getActivity().getSupportFragmentManager().beginTransaction();
+                            ft.replace(R.id.frame, modifyRoutesFragment, "modifyRouteFragment");
+                            ft.addToBackStack("modifyRouteFragment");
+                            ft.commit();
+                        }else {
+                            Toast.makeText(v.getContext(), "Error al eliminar", Toast.LENGTH_SHORT).show();
+                        }
+                        progressDialog.dismiss();
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 VolleyLog.e("Error: ", error.getMessage());
-                flag = false;
+                Toast.makeText(context.getActivity(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
             }
         });
 
@@ -171,8 +167,6 @@ public class DeleteSiteAdapter extends RecyclerView.Adapter<DeleteSiteAdapter.My
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT);
         request_json.setRetryPolicy(policy);
         queue.add(request_json);
-
-        return flag;
 
     }
 

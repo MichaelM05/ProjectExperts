@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.mjb.projectexperts.Domain.PredesignedRoute;
 import com.mjb.projectexperts.Domain.Route;
 import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.Domain.User;
@@ -36,10 +35,11 @@ public class MenuActivity extends AppCompatActivity
     public ArrayList<Route> preRouteList;
     public User user;
     public ArrayList<Site> sites;
-    public ArrayList<Site> sitesCreate = new ArrayList<>();
-    public boolean isUpdate = false;
+    public ArrayList<Site> sitesCreate;
+    public boolean isUpdate;
     public int idRouteUpdate;
     public String nameUpdate;
+    public int tamanoRoute;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,9 +53,11 @@ public class MenuActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        sitesCreate =  new ArrayList<>();
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        tamanoRoute = 8;
         MainFragment mainFragment = new MainFragment();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame, mainFragment, "mainFragment");

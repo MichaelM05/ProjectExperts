@@ -73,7 +73,6 @@ public class CreateRouteFragment extends Fragment {
     private LocationListener locationListener;
     private ProgressDialog progressDialog;
     private Location lastLocation;
-    public AddSitesFragment ads;
     private String lat,leng;
     private TextView txtNameRoute;
     public ArrayList<Site> sitios;
@@ -91,15 +90,15 @@ public class CreateRouteFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_create_route, container, false);
 
         ArrayAdapter<String> arrayAdapterLocation = new ArrayAdapter<String>(v.getContext(),
-                android.R.layout.simple_dropdown_item_1line, actividad);
+                android.R.layout.simple_dropdown_item_1line, distancia);
         materialDesignSpinnerLocation = (MaterialBetterSpinner)
-                v.findViewById(R.id.spinner_actividad);
+                v.findViewById(R.id.spinner_distancia);
         materialDesignSpinnerLocation.setAdapter(arrayAdapterLocation);
 
         ArrayAdapter<String> arrayAdapterActivity = new ArrayAdapter<String>(v.getContext(),
-                android.R.layout.simple_dropdown_item_1line, distancia);
+                android.R.layout.simple_dropdown_item_1line, actividad);
         materialDesignSpinnerActivity = (MaterialBetterSpinner)
-                v.findViewById(R.id.spinner_distancia);
+                v.findViewById(R.id.spinner_actividad);
         materialDesignSpinnerActivity.setAdapter(arrayAdapterActivity);
 
         ArrayAdapter<String> arrayAdapterTT = new ArrayAdapter<String>(v.getContext(),
@@ -376,8 +375,8 @@ public class CreateRouteFragment extends Fragment {
                             progressDialog.dismiss();
                             AddSitesFragment addSitesFragment = new AddSitesFragment();
                             FragmentTransaction ads = getActivity().getSupportFragmentManager().beginTransaction();
-                            ads.replace(R.id.frame, addSitesFragment, "routesFoundFragment");
-                            ads.addToBackStack("routesFoundFragment");
+                            ads.replace(R.id.frame, addSitesFragment, "addSitesFragment");
+                            ads.addToBackStack("addSitesFragment");
                             ads.commit();
                         }else{
                             progressDialog.dismiss();

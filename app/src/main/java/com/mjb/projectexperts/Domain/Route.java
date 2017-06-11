@@ -9,9 +9,6 @@ public class Route {
 
     private String nameRoute,descriptionRoute;
     private String idUser;
-
-
-
     private int idRoute;
     private ArrayList<Site> sites;
 

@@ -119,7 +119,7 @@ public class MainFragment extends Fragment {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage()+" !");
+                VolleyLog.e("Error: ", error.getCause().getMessage()+" !");
                 Toast.makeText(getActivity(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
 
             }

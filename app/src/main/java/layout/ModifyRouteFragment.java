@@ -2,12 +2,10 @@ package layout;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -15,29 +13,14 @@ import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.DefaultRetryPolicy;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.RetryPolicy;
-import com.android.volley.VolleyError;
-import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
 import com.mjb.projectexperts.DeleteSiteAdapter;
 import com.mjb.projectexperts.Domain.Route;
-import com.mjb.projectexperts.Domain.Site;
 import com.mjb.projectexperts.MenuActivity;
 import com.mjb.projectexperts.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,6 +46,13 @@ public class ModifyRouteFragment extends Fragment {
         routeList = new ArrayList<>();
 
         routeList = ((MenuActivity)getActivity()).preRouteList;
+        if(routeList != null){
+            if(routeList.size() == 0){
+                Toast.makeText(getActivity(), "No tiene rutas prediseñadas!", Toast.LENGTH_SHORT).show();
+            }
+        }else{
+            Toast.makeText(getActivity(), "No tiene rutas prediseñadas!", Toast.LENGTH_SHORT).show();
+        }
 
         String  idUser = ((MenuActivity) getActivity()).user.getIdUser();
         for(int i = 0; i < routeList.size(); i++){
@@ -81,19 +71,6 @@ public class ModifyRouteFragment extends Fragment {
         progressDialog.setMessage("Espere....");
         progressDialog.setCancelable(false);
 
-
-
-        /**Button btnAdd = (Button)v.findViewById(R.id.btn_add_site);
-        btnAdd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AddSitesFragment addSitesFragment = new AddSitesFragment();
-                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                ft.replace(R.id.frame, addSitesFragment, "addSitesFragment");
-                ft.addToBackStack("addSitesFragment");
-                ft.commit();
-            }
-        });*/
 
         return v;
     }

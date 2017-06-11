@@ -54,7 +54,7 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(final AddSiteAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(final AddSiteAdapter.MyViewHolder holder, final int position) {
         final Site sitio = sites.get(position);
         holder.txvNameRoute.setText(sitio.getNameSite());
 
@@ -68,9 +68,15 @@ public class AddSiteAdapter extends RecyclerView.Adapter<AddSiteAdapter.MyViewHo
         holder.btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Toast.makeText(v.getContext(), "Sitio agregado", Toast.LENGTH_SHORT).show();
-                ((MenuActivity) mContext.getActivity()).sitesCreate.add(sitio);
+                if(((MenuActivity) mContext.getActivity()).sitesCreate.size() <= ((MenuActivity) mContext.getActivity()).tamanoRoute) {
+                    Toast.makeText(v.getContext(), "Sitio agregado", Toast.LENGTH_SHORT).show();
+                    ((MenuActivity) mContext.getActivity()).sitesCreate.add(sitio);
+                    sites.remove(position);
+                    notifyItemRemoved(position);
+                    notifyItemRangeChanged(position, sites.size());
+                }else {
+                    Toast.makeText(v.getContext(), "Ha alcanzado el numero máximo de sitios por ruta.", Toast.LENGTH_SHORT).show();
+                }
 
             }
 

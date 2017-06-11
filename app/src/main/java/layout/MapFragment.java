@@ -114,12 +114,16 @@ public class MapFragment extends Fragment implements OnMapReadyCallback, GoogleM
     private void makeRequest(){
         String origin = route.getSites().get(0).getLatSite() + "," + route.getSites().get(0).getLengSite();
         String destiny = route.getSites().get(route.getSites().size()-1).getLatSite() + "," + route.getSites().get(route.getSites().size()-1).getLengSite();
-        String waypoints ="";
-        for (int i = 1; i < route.getSites().size()-1 ; i++) {
-            waypoints += "|"+route.getSites().get(i).getLatSite()+","+route.getSites().get(i).getLengSite();
+        String waypoints = "";
+        if(route.getSites().size() > 2){
+            waypoints ="&waypoints=optimize:true";
+            for (int i = 1; i < route.getSites().size()-1 ; i++) {
+                waypoints += "|"+route.getSites().get(i).getLatSite()+","+route.getSites().get(i).getLengSite();
+            }
         }
+
         String url = "https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination="+destiny+
-                "&waypoints=optimize:true"+waypoints+"&key="+getString(R.string.google_api_key);
+                waypoints+"&key="+getString(R.string.google_api_key);
         System.out.println(url);
         JsonObjectRequest request = new JsonObjectRequest(url, new Response.Listener<JSONObject>() {
             @Override

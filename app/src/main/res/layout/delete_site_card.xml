@@ -32,7 +32,7 @@
             <TextView
                 android:id="@+id/txvNameRoute"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/text"
                 android:layout_below="@id/imc_route"
                 android:paddingLeft="@dimen/album_title_padding"
                 android:paddingRight="@dimen/album_title_padding"
