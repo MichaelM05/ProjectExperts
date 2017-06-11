@@ -55,7 +55,7 @@ public class SearchDestinationFragment extends Fragment
     String[] actividad = {"Cultural","Montaña","Ecológico","Recreativo"};
     String[] distancia = {"1 - 2 Km","2 - 4 Km","4 - 6 Km","6 - 8 Km","8 o más Km"};
     String[] precio = {"$0 - $5","$5 - $10","$10 - $20","$20 - $30","$30 o más"};
-    String[] partida = {"Mi ubicación","San José","Cartago","Limón"};
+    String[] partida = {"Mi ubicación","Alajuela","Cartago","Guanacaste","Heredia","Limón","San José","Puntarenas"};
     private boolean flag = false;
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 0; // 10 meters
     private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
@@ -183,6 +183,22 @@ public class SearchDestinationFragment extends Fragment
                         case "Limón":
                             lat = "9.98805634887536";
                             leng = "-83.04376602172852";
+                            break;
+                        case "Heredia":
+                            lat = "10.0023600";
+                            leng = "-84.1165100";
+                            break;
+                        case "Puntarenas":
+                            lat = "9.9762500";
+                            leng = "-84.8383600";
+                            break;
+                        case "Guanacaste":
+                            lat = "10,4958";
+                            leng = "-85,355";
+                            break;
+                        case "Alajuela":
+                            lat = "10.0162500";
+                            leng = "-84.2116300";
                             break;
                     }
                     searchRoutes(v.getContext(),lat,leng);
