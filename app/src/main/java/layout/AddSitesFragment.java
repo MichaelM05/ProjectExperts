@@ -89,10 +89,9 @@ public class AddSitesFragment extends Fragment {
                 progressDialog.show();
                 if(flag){
                     updateRoute(getContext(),v);
-                }else{
+                }else {
                     createRoute(getContext(),v);
                 }
-
 
             }
         });

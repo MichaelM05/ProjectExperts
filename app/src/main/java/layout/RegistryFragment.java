@@ -1,6 +1,7 @@
 package layout;
 
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -43,7 +44,7 @@ public class RegistryFragment extends Fragment {
     private EditText txtEmail;
     private EditText txtPassword;
     private User user;
-    private boolean flag = false;
+    private ProgressDialog progressDialog;
 
     public RegistryFragment() {
     }
@@ -60,6 +61,12 @@ public class RegistryFragment extends Fragment {
         txtUserName = (EditText) v.findViewById(R.id.txtUserName);
         txtPassword = (EditText) v.findViewById(R.id.txtPassword);
 
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Espere....");
+        progressDialog.setCancelable(false);
+        progressDialog.setTitle("Registrando");
+
+
 
         btnRegistry.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,17 +76,8 @@ public class RegistryFragment extends Fragment {
                         txtUserName.getText().toString(), txtPassword.getText().toString());
 
                 if(validateFields(user)) {
-                    if (registry(v.getContext(), user)) {
-                        Toast.makeText(v.getContext(), "¡Bienvenido " + user.getName() + " !", Toast.LENGTH_SHORT).show();
-
-                        SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
-                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
-                        ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
-                        ft.addToBackStack("searchDestinationFragment");
-                        ft.commit();
-                    } else {
-                        Toast.makeText(v.getContext(), "Error problemas de conexión", Toast.LENGTH_SHORT).show();
-                    }
+                    progressDialog.show();
+                    registry(v.getContext(), user);
                 }else{
                     Toast.makeText(v.getContext(), "Datos erroneos", Toast.LENGTH_SHORT).show();
                 }
@@ -91,7 +89,7 @@ public class RegistryFragment extends Fragment {
 
 
 
-    private boolean registry(final Context context, final User user){
+    private void registry(final Context context, final User user){
 
          RequestQueue queue = Volley.newRequestQueue(context);
          final String URL = "http://rutascr.esy.es/WebServices/users";
@@ -109,14 +107,30 @@ public class RegistryFragment extends Fragment {
                 @Override
                 public void onResponse(JSONObject response) {
 
-                    flag = createSuccess(response);
+                    boolean result = createSuccess(response);
+                    if(result == true){
+                        Toast.makeText(context, "¡Bienvenido " + user.getName() + " !", Toast.LENGTH_SHORT).show();
+
+                        SearchDestinationFragment searchDestinationFragment = new SearchDestinationFragment();
+                        FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.frame, searchDestinationFragment, "searchDestinationFragment");
+                        ft.addToBackStack("searchDestinationFragment");
+                        ft.commit();
+                        progressDialog.dismiss();
+
+                    }else{
+                        progressDialog.dismiss();
+                        Toast.makeText(context, "Erro al registrar", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
             }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                 VolleyLog.e("Error: ", error.getMessage());
-                 flag = false;
+                VolleyLog.e("Error: ", error.getMessage());
+                progressDialog.dismiss();
+                Toast.makeText(context, "Error problemas de conexión", Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -127,7 +141,6 @@ public class RegistryFragment extends Fragment {
         request_json.setRetryPolicy(policy);
         queue.add(request_json);
 
-        return flag;
 
     }
 

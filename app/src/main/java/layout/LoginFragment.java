@@ -55,6 +55,7 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         Button btnAccept = (Button)v.findViewById(R.id.btn_accept_login);
+        Button btnRegistry = (Button) v.findViewById(R.id.btn_Registry);
 
         txtUserName = (TextView) v.findViewById(R.id.txtUserName);
         txtPassword = (TextView) v.findViewById(R.id.txtPassword);
@@ -80,6 +81,20 @@ public class LoginFragment extends Fragment {
 
             }
         });
+
+        btnRegistry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegistryFragment registryFragment = new RegistryFragment();
+                FragmentTransaction ft = getActivity().getSupportFragmentManager().beginTransaction();
+                ft.replace(R.id.frame, registryFragment, "registryFragment");
+                ft.addToBackStack("registryFragment");
+                ft.commit();
+
+            }
+        });
+
+
         return v;
     }
 

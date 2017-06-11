@@ -338,6 +338,7 @@ public class SearchDestinationFragment extends Fragment
 
                     }
                 }
+                progressDialog.dismiss();
             }
 
             private void searchRoutes(final Context context,final String lat,final String leng){
