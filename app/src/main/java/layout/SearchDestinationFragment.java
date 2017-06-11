@@ -358,7 +358,8 @@ public class SearchDestinationFragment extends Fragment
             }
 
             private void searchRoutes(final Context context,final String lat,final String leng){
-
+                String [] latitude = lat.split(",");
+                String [] longitud = leng.split(",");
                 RequestQueue queue = Volley.newRequestQueue(context);
                 final String URL = "http://rutascr.esy.es/WebServices/routes";
                 final String[] parameters = ((MenuActivity) getActivity()).parameters;
@@ -367,7 +368,7 @@ public class SearchDestinationFragment extends Fragment
                 params.put("price",parameters[2]);
                 params.put("duration",parameters[3]);
                 params.put("distance",parameters[0]);
-                params.put("initPoint",lat+","+leng);
+                params.put("initPoint",latitude[0]+","+longitud[0]);
                 progressDialog.setTitle("Buscando rutas");
                 progressDialog.show();
 
