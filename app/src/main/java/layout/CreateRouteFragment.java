@@ -159,70 +159,82 @@ public class CreateRouteFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                if (txtNameRoute.getText().toString().length() > 0) {
-                    String[] parameters = new String[6];
-                    parameters[0] = materialDesignSpinnerLocation.getText().toString();
-                    parameters[1] = materialDesignSpinnerActivity.getText().toString();
-                    parameters[2] = materialDesignSpinnerPrice.getText().toString();
-                    parameters[3] = materialDesignSpinnerTT.getText().toString();
-                    parameters[4] = materialDesignSpinnerOrigin.getText().toString();
-                    parameters[5] = txtNameRoute.getText().toString();
-                    ((MenuActivity) getActivity()).parameters = parameters;
 
-
-                    if (parameters[4].equals("Mi ubicación")) {
-                        if (lastLocation == null) {
-                            getLocation();
-                            progressDialog.show();
-                            progressDialog.setTitle("Buscando su ubicación");
-                        } else {
-                            searchSites(getActivity(), lastLocation.getLatitude() +
-                                    "", lastLocation.getLongitude() + "");
+                    boolean isUpdate = ((MenuActivity) getActivity()).isUpdate;
+                    if(isUpdate == false){
+                        String name = txtNameRoute.getText().toString();
+                        if(name.length() > 0){
+                            getInformation(v);
+                        }else{
+                            Toast.makeText(v.getContext(), "Ingrese nombre ruta", Toast.LENGTH_SHORT).show();
                         }
-                    } else {
-                        switch (parameters[4]) {
-                            case "Cartago":
-                                lat = "9.862251741694937";
-                                leng = "-83.91546249389648";
-                                break;
-                            case "San José":
-                                lat = "9.915826049729528";
-                                leng = "-84.06944274902344";
-                                break;
-                            case "Limón":
-                                lat = "9.98805634887536";
-                                leng = "-83.04376602172852";
-                                break;
-                            case "Heredia":
-                                lat = "10.0023600";
-                                leng = "-84.1165100";
-                                break;
-                            case "Puntarenas":
-                                lat = "9.9762500";
-                                leng = "-84.8383600";
-                                break;
-                            case "Guanacaste":
-                                lat = "10,4958";
-                                leng = "-85,355";
-                                break;
-                            case "Alajuela":
-                                lat = "10.0162500";
-                                leng = "-84.2116300";
-                                break;
-                        }
-                        searchSites(v.getContext(), lat, leng);
+                    }else {
+                        getInformation(v);
                     }
-
-
-                }else{
-                    Toast.makeText(v.getContext(), "Ingrese nombre ruta", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
         return v;
     }
 
+
+    private void getInformation (View v){
+
+        String[] parameters = new String[6];
+        parameters[0] = materialDesignSpinnerLocation.getText().toString();
+        parameters[1] = materialDesignSpinnerActivity.getText().toString();
+        parameters[2] = materialDesignSpinnerPrice.getText().toString();
+        parameters[3] = materialDesignSpinnerTT.getText().toString();
+        parameters[4] = materialDesignSpinnerOrigin.getText().toString();
+        parameters[5] = txtNameRoute.getText().toString();
+
+        ((MenuActivity) getActivity()).parameters = parameters;
+
+
+        if (parameters[4].equals("Mi ubicación")) {
+            if (lastLocation == null) {
+                getLocation();
+                progressDialog.show();
+                progressDialog.setTitle("Buscando su ubicación");
+            } else {
+                searchSites(getActivity(), lastLocation.getLatitude() +
+                        "", lastLocation.getLongitude() + "");
+            }
+        } else {
+            switch (parameters[4]) {
+                case "Cartago":
+                    lat = "9.862251741694937";
+                    leng = "-83.91546249389648";
+                    break;
+                case "San José":
+                    lat = "9.915826049729528";
+                    leng = "-84.06944274902344";
+                    break;
+                case "Limón":
+                    lat = "9.98805634887536";
+                    leng = "-83.04376602172852";
+                    break;
+                case "Heredia":
+                    lat = "10.0023600";
+                    leng = "-84.1165100";
+                    break;
+                case "Puntarenas":
+                    lat = "9.9762500";
+                    leng = "-84.8383600";
+                    break;
+                case "Guanacaste":
+                    lat = "10,4958";
+                    leng = "-85,355";
+                    break;
+                case "Alajuela":
+                    lat = "10.0162500";
+                    leng = "-84.2116300";
+                    break;
+            }
+            searchSites(v.getContext(), lat, leng);
+        }
+
+    }
 
 
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
